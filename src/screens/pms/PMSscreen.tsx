@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
 
 import {
   hp,
@@ -22,9 +23,30 @@ import SvgIcons from '../../helper/SvgIcons';
 import {ListItem, SearchBox} from '../../components';
 import {PMSscreenProps, TopTabProps} from '../../interface/common';
 
+const data = [
+  { label: 'Completed', value: 'completed' },
+  { label: 'Planning', value: 'planning' },
+  { label: 'In Progress', value: 'in_progress' },
+
+];
+
 const PMSscreen: FC<PMSscreenProps> = ({navigation}) => {
   const [searchText, setSearchText] = useState<string>('');
   const [topTabData, setTopTabData] = useState<TopTabProps[]>(topTabArray);
+  const [value, setValue] = useState<string>('completed');
+  const [due, setDue] = useState<string>("daily");
+  const [sailingData, setSailingData] = useState<PmsScreenItem[]>([])
+
+
+  const getData =async()=>{
+    // const resp = await 
+  }
+
+  useEffect(()=>{
+    getData()
+  },[])
+
+  
 
   const renderSailingList = ({item}: any) => {
     return (
@@ -58,7 +80,6 @@ const PMSscreen: FC<PMSscreenProps> = ({navigation}) => {
         value={searchText}
         onChangeText={text => setSearchText(text)}
       />
-
       <View style={styles.toptabContainer}>
         {topTabData?.map(item => {
           return (
@@ -94,10 +115,29 @@ const PMSscreen: FC<PMSscreenProps> = ({navigation}) => {
         </TouchableOpacity>
         <View style={styles.flexRow}>
           <Text style={styles.stausText}>{`Status:`}</Text>
-          <TouchableOpacity style={styles.flexRow}>
-            <Text style={styles.completedText}>{`Completed`}</Text>
-            <SvgIcons iconName="downArrow" />
-          </TouchableOpacity>
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={data}
+              // search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder="Select item"
+              value={value}
+              onChange={item => {
+                setValue(item.value);
+              }}
+              // renderLeftIcon={() => (
+              //   <SvgIcons iconName="downArrow" />
+              // )}
+            />
+          {/* <TouchableOpacity style={styles.flexRow}>
+            
+          </TouchableOpacity> */}
         </View>
       </View>
 
@@ -116,6 +156,29 @@ const PMSscreen: FC<PMSscreenProps> = ({navigation}) => {
 export default PMSscreen;
 
 const styles = StyleSheet.create({
+  dropdown: {
+    margin: 16,
+    height: 50,  
+    width:80,
+  },
+  placeholderStyle: {
+    color:'#0FABA6',
+    fontSize: 11,
+    fontFamily: fonts.medium,
+  },
+  selectedTextStyle: {
+    fontSize: fontSize(11),
+    color: '#0FABA6',
+    fontFamily: fonts.medium,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
   toptabContainer: {
     flexDirection: 'row',
     borderBottomWidth: wp(0.2),
@@ -152,7 +215,6 @@ const styles = StyleSheet.create({
     fontFamily: fonts.medium,
   },
   stausText: {
-    marginRight: wp(2),
     color: colors.darkGrey,
     fontSize: fontSize(11),
     fontFamily: fonts.medium,
@@ -164,3 +226,10 @@ const styles = StyleSheet.create({
     fontFamily: fonts.medium,
   },
 });
+
+export interface PmsScreenItem {
+  id: number;
+  tag: string;
+  date: string;
+  desc: string;
+}
