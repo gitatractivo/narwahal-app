@@ -1,0 +1,9 @@
+export {default as Box} from '../../assets/svg/box';
+export {default as Menu} from '../../assets/svg/menu';
+export {default as Target} from '../../assets/svg/target';
+export {default as Pencil} from '../../assets/svg/pencil';
+export {default as Wrench} from '../../assets/svg/wrench';
+export {default as CheckIn} from '../../assets/svg/checkIn';
+export {default as CheckOut} from '../../assets/svg/checkOut';
+export {default as CheckMark} from '../../assets/svg/checkMark';
+export {default as DownArrow} from '../../assets/svg/downArrow';
