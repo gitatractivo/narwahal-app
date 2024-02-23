@@ -4,7 +4,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {ListItemProps} from '../../interface/common';
 import {colors, fontSize, fonts, wp} from '../../helper';
 
-const ListItem = ({item, onPress}: ListItemProps) => {
+const CheckInNewSpareListItem = ({item, onPress}: any) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -13,16 +13,24 @@ const ListItem = ({item, onPress}: ListItemProps) => {
       <View style={styles.titleView}>
         <View style={styles.titleSubView}>
           <Text numberOfLines={1} style={styles.titleText}>
-            {item?.title?.length < 25
-              ? `${item?.title}`
-              : `${item?.title?.substring(0, 22)}...`}
+            {`PO NO.- ${item?.PoNo}`}
           </Text>
           <View
             style={[
               styles.tagView,
               {
                 backgroundColor:
-                  item?.tag == 'PMS' ? colors.primaryLight : colors.purpleLight,
+                  item?.tag == 'Received'
+                    ? colors.greenxLight
+                    : item?.tag == 'Partial'
+                    ? colors.purplexLight
+                    : colors.redxLight,
+                borderColor:
+                  item?.tag == 'Received'
+                    ? colors.greenLight
+                    : item?.tag == 'Partial'
+                    ? colors.purpleLight
+                    : colors.redLight,
               },
             ]}>
             <Text
@@ -30,7 +38,11 @@ const ListItem = ({item, onPress}: ListItemProps) => {
                 styles.tagText,
                 {
                   color:
-                    item?.tag == 'PMS' ? colors.primaryDark : colors.purple,
+                    item?.tag == 'Received'
+                      ? colors.green
+                      : item?.tag == 'Partial'
+                      ? colors.purple
+                      : colors.red,
                 },
               ]}>
               {item?.tag}
@@ -46,7 +58,7 @@ const ListItem = ({item, onPress}: ListItemProps) => {
   );
 };
 
-export default ListItem;
+export default CheckInNewSpareListItem;
 
 const styles = StyleSheet.create({
   container: {
@@ -72,6 +84,7 @@ const styles = StyleSheet.create({
   },
   tagView: {
     marginLeft: wp(2),
+    borderWidth: wp(0.2),
     paddingVertical: wp(1),
     borderRadius: wp(1.33),
     paddingHorizontal: wp(3),

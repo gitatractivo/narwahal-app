@@ -40,6 +40,8 @@ const GetIconFromLibrary = (name: string) => {
       return Icons.CheckIn;
     case 'wrench':
       return Icons.Wrench;
+    case 'chevronRight':
+      return Icons.ChevronRight;
 
     default:
       return Icons.Target;

@@ -1,29 +1,23 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {colors, fontSize, fonts} from '../../helper';
+import {StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {commonStyles} from '../../helper';
+import {SearchBox} from '../../components';
+import InventoryTopBarNavigation from '../../navigation/topBarTabs/InventoryTopBarNavigation';
 
-type Props = {};
+const InventoryScreen = () => {
+  const [searchText, setSearchText] = useState<string>('');
 
-const InventoryScreen = (props: Props) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>InventoryScreen</Text>
+    <View style={commonStyles.root}>
+      <SearchBox
+        value={searchText}
+        onChangeText={text => setSearchText(text)}
+      />
+      <InventoryTopBarNavigation />
     </View>
   );
 };
 
 export default InventoryScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.white,
-  },
-  text: {
-    color: colors.black,
-    fontSize: fontSize(20),
-    fontFamily: fonts.semiBold,
-  },
-});
+const styles = StyleSheet.create({});

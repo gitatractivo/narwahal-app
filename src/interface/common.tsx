@@ -14,7 +14,6 @@ import {
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {BottomStackParamList} from '../navigation/BottomTabNavigation';
-
 export type PMSscreenProps = NativeStackScreenProps<
   BottomStackParamList,
   'PMSscreen'
@@ -41,7 +40,7 @@ export type CommonButtonProps = {
 
 export type ListItemProps = {
   onPress: () => void;
-  item?: SailingDataProps;
+  item?: PmsScreenItem;
 };
 
 export type DetailListItemProps = {
@@ -54,9 +53,9 @@ export interface ShadowProps {
   shadowStyle?: StyleProp<ViewStyle>;
 }
 export interface FABProps {
+  status: string;
   onPress: () => void;
 }
-
 export type SvgIconsProps = {
   uri?: boolean;
   width?: number;
@@ -110,12 +109,26 @@ export type SailingDataProps = {
   title: string | any;
 };
 export type DetailDataProps = {
-  id: number;
-  tag: string;
+  product:{
+    id: string;
+    material_desc: string;
+    maker_desc: string;
+    part_no: string;
+  }
   rob: number;
-  title: string;
-  pkgQty: number;
-  uniqueID: string;
-  checkoutQty: number;
-  workingReplace: number;
 };
+
+
+export type PmsScreenItem = {
+  id: number;
+  products: PmsProduct[];
+  due: string;
+  description: string;
+  status: string;
+  pic: number;
+  interval: number
+}
+
+export type PmsProduct = {
+
+}

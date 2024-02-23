@@ -5,11 +5,13 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 
 import SvgIcons from '../../helper/SvgIcons';
 import {SearchBoxProps} from '../../interface/common';
 import {colors, fontSize, fonts, hp, icons, isIos, wp} from '../../helper';
+import {useNavigation} from '@react-navigation/native';
 
 const SearchBox = ({
   value,
@@ -26,10 +28,16 @@ const SearchBox = ({
   secureTextEntry = false,
   autoCapitalize = 'sentences',
 }: SearchBoxProps) => {
+  //@ts-ignore
+  const {openDrawer} = useNavigation();
   return (
     <>
+      <SafeAreaView />
       <View style={[styles.inputContainer, additionalStyle]}>
-        <TouchableOpacity activeOpacity={0.7} style={styles.marginRight}>
+        <TouchableOpacity
+          onPress={() => openDrawer()}
+          activeOpacity={0.7}
+          style={styles.marginRight}>
           <SvgIcons iconName="menu" />
         </TouchableOpacity>
         <TextInput

@@ -1,29 +1,26 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {colors, fontSize, fonts} from '../../helper';
+import {StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {commonStyles} from '../../helper';
+import {FAB, SearchBox} from '../../components';
+import CheckInTopBarNavigation from '../../navigation/topBarTabs/CheckInTopBarNavigation';
 
 type Props = {};
 
-const CheckInScreen = (props: Props) => {
+const CheckInScreen = () => {
+  const [searchText, setSearchText] = useState<string>('');
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>CheckInScreen</Text>
+    <View style={commonStyles.root}>
+      <SearchBox
+        value={searchText}
+        onChangeText={text => setSearchText(text)}
+      />
+      <CheckInTopBarNavigation />
+      <FAB title={'Confirm'} onPress={() => {}} />
     </View>
   );
 };
 
 export default CheckInScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.white,
-  },
-  text: {
-    color: colors.black,
-    fontSize: fontSize(20),
-    fontFamily: fonts.semiBold,
-  },
-});
+const styles = StyleSheet.create({});

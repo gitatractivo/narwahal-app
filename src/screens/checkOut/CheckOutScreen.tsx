@@ -1,29 +1,38 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {colors, fontSize, fonts} from '../../helper';
+import {FlatList, StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {colors, commonStyles, fontSize, fonts} from '../../helper';
+import {CheckOutListItem, FAB, SearchBox} from '../../components';
+import {checkOutList} from '../../helper/dataConstant';
 
 type Props = {};
 
-const CheckOutScreen = (props: Props) => {
+const CheckOutScreen = ({navigation}: any) => {
+  const [searchText, setSearchText] = useState<string>('');
+
+  const renderCheckOutList = ({item}: any) => {
+    return <CheckOutListItem item={item} onPress={() => {}} />;
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>CheckOutScreen</Text>
+    <View style={commonStyles.root}>
+      <SearchBox
+        value={searchText}
+        onChangeText={text => setSearchText(text)}
+      />
+
+      <FlatList
+        bounces={false}
+        data={checkOutList}
+        renderItem={renderCheckOutList}
+        keyExtractor={item => item?.id?.toString()}
+        contentContainerStyle={commonStyles.contentContainerStyle}
+      />
+
+      <FAB title={'Confirm'} onPress={() => {}} />
     </View>
   );
 };
 
 export default CheckOutScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.white,
-  },
-  text: {
-    color: colors.black,
-    fontSize: fontSize(20),
-    fontFamily: fonts.semiBold,
-  },
-});
+const styles = StyleSheet.create({});

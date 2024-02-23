@@ -5,17 +5,18 @@ import { DetailListItemProps } from '../../interface/common';
 import { colors, fontSize, fonts, hp, wp } from '../../helper';
 
 const DetailListItem = ({ item, onPress }: DetailListItemProps) => {
+  console.log("item:",item)
   return (
       <TouchableOpacity
           activeOpacity={0.7}
           onPress={onPress}
           style={styles.container}>
-        <Text style={styles.titleText}>{item?.product?.material_desc}</Text>
+        <Text style={styles.titleText}>{item?.material_desc}</Text>
         <View style={styles.tagContainer}>
           <View style={styles.tagView}>
-            <Text style={styles.tagText}>{item?.product?.maker_desc}</Text>
+            <Text style={styles.tagText}>{item?.maker_desc}</Text>
           </View>
-          <Text style={styles.uniqText}>{item?.product?.id}</Text>
+          <Text style={styles.uniqText}>{item?.id}</Text>
         </View>
 
         <View style={styles.qtyContainer}>

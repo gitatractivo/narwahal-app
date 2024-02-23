@@ -5,6 +5,7 @@ import {colors} from './colorConstant';
 import {strings} from './stringConstant';
 import {topTabArray, sailingData, detailData} from './dataConstant';
 import {hp, wp, isIos, fontSize, deviceType} from './globalConstant';
+import {BASE_URL} from './baseurl';
 
 export {
   hp,
@@ -20,4 +21,5 @@ export {
   topTabArray,
   sailingData,
   commonStyles,
+  BASE_URL,
 };

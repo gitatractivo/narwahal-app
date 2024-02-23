@@ -17,7 +17,7 @@ export type BottomStackParamList = {
   CheckInScreen: undefined;
   CheckOutScreen: undefined;
   InventoryScreen: undefined;
-  PMSdetailScreen: {title: string; desc: string} | undefined;
+  PMSdetailScreen: { id: string; description: string, status: string, } | undefined;
 };
 
 const PMSstack = createNativeStackNavigator();
@@ -56,12 +56,11 @@ const BottomTabNavigator = () => {
             width: 0,
             height: 10,
           },
-          shadowOpacity: 0.9,
+          shadowOpacity: 0.4,
           shadowRadius: 12,
           elevation: 10,
           shadowColor: colors.black,
           paddingHorizontal: wp(3),
-          zIndex: 999,
         },
       }}>
       <Tab.Screen

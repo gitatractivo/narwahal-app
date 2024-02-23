@@ -7,3 +7,4 @@ export {default as CheckIn} from '../../assets/svg/checkIn';
 export {default as CheckOut} from '../../assets/svg/checkOut';
 export {default as CheckMark} from '../../assets/svg/checkMark';
 export {default as DownArrow} from '../../assets/svg/downArrow';
+export {default as ChevronRight} from '../../assets/svg/chevronRight';
