@@ -5,12 +5,8 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import RootNavigation from './src/navigation/Navigation';
 import {colors} from './src/helper';
-import {addEventListener} from './src/bindings/LocateModule';
 
 const App = () => {
-    addEventListener('LocateTag', (location) => {
-        console.log('Location changed:', location);
-    });
   return (
     <NavigationContainer>
       <StatusBar

@@ -11,6 +11,7 @@ import PMSdetailScreen from '../screens/pms/PMSdetailScreen';
 import CheckOutScreen from '../screens/checkOut/CheckOutScreen';
 import {colors, fontSize, fonts, hp, isIos, wp} from '../helper';
 import InventoryScreen from '../screens/inventory/InventoryScreen';
+import ConnectScreen from "../screens/connect/ConnectScreen.tsx";
 
 export type BottomStackParamList = {
   PMSscreen: undefined;
@@ -18,6 +19,7 @@ export type BottomStackParamList = {
   CheckOutScreen: undefined;
   InventoryScreen: undefined;
   PMSdetailScreen: { id: string; description: string, status: string, } | undefined;
+    ConnectScreen: undefined;
 };
 
 const PMSstack = createNativeStackNavigator();
@@ -119,6 +121,20 @@ const BottomTabNavigator = () => {
           ),
         }}
       />
+        <Tab.Screen
+            name="ConnectScreen"
+            component={ConnectScreen}
+            options={{
+                tabBarActiveTintColor: 'black',
+                tabBarIcon: ({focused}) => (
+                    <BottomTabItem
+                        focused={focused}
+                        iconName={'checkOut'}
+                        tabTitle={'Connect'}
+                    />
+                ),
+            }}
+        />
     </Tab.Navigator>
   );
 };
