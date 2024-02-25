@@ -7,6 +7,7 @@ import android.os.Message
 import android.util.Log
 import co.kr.bluebird.sled.Reader
 import co.kr.bluebird.sled.SDConsts
+import co.kr.bluebird.sled.SDConsts.RFResult
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
@@ -23,30 +24,27 @@ class TagReadModule(reactContext: ReactApplicationContext) : ReactContextBaseJav
         override fun handleMessage(msg: Message) {
             if (msg.what != SDConsts.Msg.RFMsg) return;
             if (msg.arg1 == SDConsts.RFCmdMsg.INVENTORY) {
-                if (msg.arg2 == SDConsts.RFResult.SUCCESS) {
+                if (msg.arg2 == RFResult.SUCCESS) {
                     if (msg.obj != null && msg.obj is String) {
                         val data = msg.obj as String
                         dispatchEvent(reactContext, "ReadTag", data);
                     }
                 }
-            } else if (msg.arg1 == SDConsts.RFCmdMsg.STOP_INVENTORY) {
-                existingReaderInstance?.RF_StopInventory()
-                existingReaderInstance = null
             }
-
         }
     }
 
-    private var existingReaderInstance: Reader? = null
+    @ReactMethod
+    fun performInventory(): Boolean {
+        val reader = Reader.getReader(currentActivity, handler)
+        reader.RF_SetSession(1);
+        return reader.RF_PerformInventory(false, false, true) == RFResult.SUCCESS
+    }
 
     @ReactMethod
-    fun startTagReader() {
-        Log.d(tag, "Starting tag reading")
-        existingReaderInstance = Reader.getReader(currentActivity, handler)!!
-        existingReaderInstance?.RF_SetSession(1);
-        val ret = existingReaderInstance?.RF_PerformInventory(false, false, true)
-        Log.d("$tag ret: ", ret.toString())
-        Log.d("$tag reader: ", existingReaderInstance.toString())
+    fun stopInventory(): Boolean {
+        val reader = Reader.getReader(currentActivity, handler)
+        return reader.RF_StopInventory() == RFResult.SUCCESS
     }
 
     fun dispatchEvent(
