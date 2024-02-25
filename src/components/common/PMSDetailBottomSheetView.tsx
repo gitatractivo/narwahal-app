@@ -17,13 +17,14 @@ const PMSDetailBottomSheetView = ({setEditModal}) => {
 
     useEffect(() => {
         const listener1 = DeviceEventEmitter.addListener('TriggerPress', () => {
+            console.log('Trigger Pressed');
             setTriggerPressed(true);
         });
         const listener2 = DeviceEventEmitter.addListener('TriggerRelease', () => {
+            console.log('Trigger Released');
             setTriggerPressed(false);
         });
         const listener3 = DeviceEventEmitter.addListener('LocateTag', (event) => {
-            console.log('Strength: ', event);
             setStrength(event);
         });
         return () => {
@@ -43,28 +44,26 @@ const PMSDetailBottomSheetView = ({setEditModal}) => {
 
 
     return <>
-        <View style={[
-            styles.modalTitleView,
-            {justifyContent: 'space-between'},
-        ]}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <SvgIcons iconName="target" />
-                <Text style={styles.modalTitleText}>{`Tracking`}</Text>
-            </View>
-            <View style={{paddingRight: wp(4)}}>
-                <LinearGradient
-                    colors={['#F9A9A7', '#C4BDA5', '#92D0A2']}
-                    start={{x: 0, y: 0}}
-                    end={{x: strength / 100, y: 0}}
-                    style={{
-                        width: wp((strength  / 100)),
-                        height: hp(1.5),
-                        borderRadius: wp(100),
-                    }}
-                />
-            </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={styles.modalTitleText}>{strength}</Text>
+        <View style={styles.modalMainBox}>
+            <View style={[
+                styles.modalTitleView,
+            ]}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <SvgIcons iconName="target" iconColor={triggerPressed ? 'blue' : 'red'} iconBorderColor={triggerPressed  ? 'blue' : 'red'} />
+                    <Text style={styles.modalTitleText}>{triggerPressed ? 'Tracking' : 'Stopped'}</Text>
+                </View>
+                <View style={{paddingLeft: wp(4), flex: 2}}>
+                    <LinearGradient
+                        colors={['#F9A9A7', '#C4BDA5', '#92D0A2']}
+                        start={{x: 0, y: 0}}
+                        end={{x: strength / 100, y: 0}}
+                        style={{
+                            width: wp(((strength  / 100) * 54)),
+                            height: hp(1.5),
+                            borderRadius: wp(100),
+                        }}
+                    />
+                </View>
             </View>
         </View>
         <View style={styles.modalSubTitleView}>
@@ -103,14 +102,16 @@ export default PMSDetailBottomSheetView;
 const styles = StyleSheet.create({
     modalTitleView: {
         width: '100%',
-        paddingTop: wp(7),
-        paddingLeft: wp(7),
-        paddingBottom: wp(7),
         alignItems: 'center',
         flexDirection: 'row',
         alignSelf: 'flex-start',
+    },
+    modalMainBox: {
         borderBottomWidth: wp(0.2),
         borderBlockColor: colors.grey,
+        paddingTop: wp(7),
+        paddingLeft: wp(7),
+        paddingBottom: wp(7),
     },
     modalTitleText: {
         marginLeft: wp(3),
