@@ -11,6 +11,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.modules.core.DeviceEventManagerModule
+import com.facebook.react.bridge.Promise
 
 
 class ConnectivityModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
@@ -30,19 +31,27 @@ class ConnectivityModule(reactContext: ReactApplicationContext) : ReactContextBa
     }
 
     @ReactMethod
-    fun wakeup(): Boolean {
+    fun wakeup(promise: Promise) {
         val reader = Reader.getReader(currentActivity, handler)
-        if (!reader.SD_Open()) return false
-        return reader.SD_Wakeup().let {
-            it == SDConsts.SDResult.SUCCESS || it == SDConsts.SDResult.ALREADY_CONNECTED
+        if (!reader.SD_Open()) {
+            promise.reject("Open Failed")
+            return
         }
+        Log.d("ConnectivityModule", "Waking up")
+        val result = reader.SD_Wakeup().let {
+            it == SDConsts.SDResult.SUCCESS || it == SDConsts.SDResult.ALREADY_CONNECTED
+        }.also { Log.d(tag, "Wakeup result $it") }
+        promise.resolve(result)
     }
 
     @ReactMethod
-    fun connect(): Boolean {
+    fun connect(promise: Promise) {
         val reader = Reader.getReader(currentActivity, handler)
         val ret = reader.SD_Connect()
-        return ret == SDConsts.SDResult.SUCCESS || ret == SDConsts.SDResult.ALREADY_CONNECTED
+        Log.d("ConnectivityModule", "Connecting")
+        val result = (ret == SDConsts.SDResult.SUCCESS || ret == SDConsts.SDResult.ALREADY_CONNECTED)
+                .also { Log.d(tag, "Connect result $it") }
+        promise.resolve(result)
     }
 
 

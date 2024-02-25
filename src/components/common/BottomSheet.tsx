@@ -6,7 +6,7 @@ import Modal from 'react-native-modal';
 import {wp, colors} from '../../helper';
 import {BottomSheetProps} from '../../interface/common';
 
-const BottomSheet = ({isVisible, closeSheet, sheetBody}: BottomSheetProps) => {
+const BottomSheet = ({isVisible, closeSheet, children}: BottomSheetProps) => {
   return (
     <Modal
       avoidKeyboard
@@ -16,7 +16,7 @@ const BottomSheet = ({isVisible, closeSheet, sheetBody}: BottomSheetProps) => {
       swipeDirection={['down']}
       onSwipeComplete={closeSheet}
       onBackdropPress={closeSheet}>
-      <View style={styles.bottomSheetView}>{sheetBody}</View>
+      <View style={styles.bottomSheetView}>{children}</View>
     </Modal>
   );
 };

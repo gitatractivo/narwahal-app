@@ -92,7 +92,7 @@ export interface SearchBoxProps {
 export type BottomSheetProps = {
   isVisible: boolean;
   closeSheet: () => void;
-  sheetBody: ReactElement;
+  children: ReactElement[] | ReactElement;
 };
 
 export type TopTabProps = {

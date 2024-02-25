@@ -3,10 +3,11 @@ import PMSscreen from '../../screens/pms/PMSscreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {
-  CheckInNewSpareListItem,
-  FAB,
-  ListItem,
-  SearchBox,
+    BottomSheet,
+    CheckInNewSpareListItem,
+    FAB,
+    ListItem,
+    SearchBox,
 } from '../../components';
 import {
   colors,
@@ -25,11 +26,14 @@ import {
 } from '../../helper/dataConstant';
 import CheckInSpareList from '../../components/common/CheckInSpareListItem';
 import CheckInDockListItem from '../../components/common/CheckInDockListItem';
+import {useState} from "react";
 
 const Tab = createMaterialTopTabNavigator();
 
 function Spares({navigation}: any) {
-  const renderCheckInSpareList = ({item}: any) => {
+    const [editModal, setEditModal] = useState<boolean>(false);
+
+    const renderCheckInSpareList = ({item}: any) => {
     return <CheckInSpareList item={item} onPress={() => {}} />;
   };
 
@@ -53,6 +57,53 @@ function Spares({navigation}: any) {
         keyExtractor={item => item?.id?.toString()}
         contentContainerStyle={commonStyles.contentContainerStyle}
       />
+        {/*<BottomSheet*/}
+        {/*    isVisible={editModal}*/}
+        {/*    closeSheet={() => setEditModal(false)}*/}
+        {/*    sheetBody={*/}
+        {/*        <>*/}
+        {/*            <View*/}
+        {/*                style={[*/}
+        {/*                    styles.modalTitleView,*/}
+        {/*                    {justifyContent: 'space-between'},*/}
+        {/*                ]}>*/}
+        {/*                <View style={{flexDirection: 'row', alignItems: 'center'}}>*/}
+        {/*                    <SvgIcons iconName="target" />*/}
+        {/*                    <Text style={styles.modalTitleText}>{`Tracking`}</Text>*/}
+        {/*                </View>*/}
+
+        {/*            </View>*/}
+        {/*            <View style={styles.modalSubTitleView}>*/}
+        {/*                <SvgIcons iconName="pencil" />*/}
+        {/*                <Text style={styles.subTitleText}>{`Edit`}</Text>*/}
+        {/*            </View>*/}
+        {/*            <View style={styles.modalInputView}>*/}
+        {/*                <Text style={styles.modalLabelText}>{`Package Qty:`}</Text>*/}
+        {/*                <View style={styles.modalInputContainer}>*/}
+        {/*                    <TextInput*/}
+        {/*                        style={styles.modalInputStyle}*/}
+        {/*                        keyboardType="numeric"*/}
+        {/*                    />*/}
+        {/*                </View>*/}
+        {/*            </View>*/}
+        {/*            <View style={styles.modalInputView}>*/}
+        {/*                <Text style={styles.modalLabelText}>{`Checkout Qty:`}</Text>*/}
+        {/*                <View style={styles.modalInputContainer}>*/}
+        {/*                    <TextInput*/}
+        {/*                        style={styles.modalInputStyle}*/}
+        {/*                        keyboardType="numeric"*/}
+        {/*                    />*/}
+        {/*                </View>*/}
+        {/*            </View>*/}
+        {/*            <View style={styles.modalButtonContainer}>*/}
+        {/*                <CommonButton*/}
+        {/*                    title={'Save'}*/}
+        {/*                    onPress={() => setEditModal(false)}*/}
+        {/*                />*/}
+        {/*            </View>*/}
+        {/*        </>*/}
+        {/*    }*/}
+        {/*/>*/}
     </View>
   );
 }
@@ -110,6 +161,8 @@ function DryDock({navigation}: any) {
         keyExtractor={item => item?.id?.toString()}
         contentContainerStyle={commonStyles.contentContainerStyle}
       />
+
+
     </View>
   );
 }

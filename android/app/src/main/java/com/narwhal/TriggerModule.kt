@@ -3,8 +3,10 @@ package com.narwhal
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.Log
 import co.kr.bluebird.sled.Reader
 import co.kr.bluebird.sled.SDConsts
+import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
@@ -21,24 +23,23 @@ class TriggerModule(reactContext: ReactApplicationContext) : ReactContextBaseJav
     @SuppressWarnings("HandlerLeak")
     private val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
-            if (dispatchEvents.not()) return
-            if (msg.what != SDConsts.Msg.SDMsg) return
-            if (msg.arg1 == SDConsts.SDCmdMsg.TRIGGER_PRESSED) {
-                dispatchEvent(reactContext, "TriggerPress", null)
-            } else if (msg.arg1 == SDConsts.SDCmdMsg.TRIGGER_RELEASED) {
-                dispatchEvent(reactContext, "TriggerRelease", null)
-            }
+            Log.d(tag, msg.toString())
+
         }
     }
 
     @ReactMethod
-    fun startListeningForTrigger() {
-        Reader.getReader(currentActivity, handler)
+    fun startListeningForTrigger(promise: Promise) {
+        Log.d(tag, "Starting trigger listening")
         dispatchEvents = true
+        Reader.getReader(currentActivity, handler).also {
+            Log.d(tag, "Reader state: $it")
+        }
     }
 
     @ReactMethod
     fun stopListeningForTrigger() {
+        Log.d(tag, "Stopping trigger listening")
         dispatchEvents = false
     }
 

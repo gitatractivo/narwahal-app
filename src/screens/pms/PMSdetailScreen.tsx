@@ -24,6 +24,7 @@ import { commonStyles, BASE_URL} from '../../helper';
 import {DetailDataProps, PMSdetailScreenProps} from '../../interface/common';
 import {hp, wp, fonts, isIos, colors, fontSize} from '../../helper';
 import axios from 'axios';
+import PMSDetailBottomSheetView from "../../components/common/PMSDetailBottomSheetView.tsx";
 
 const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
   const id = route?.params?.id;
@@ -115,61 +116,9 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
       <BottomSheet
         isVisible={editModal}
         closeSheet={() => setEditModal(false)}
-        sheetBody={
-          <>
-            <View
-              style={[
-                styles.modalTitleView,
-                {justifyContent: 'space-between'},
-              ]}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <SvgIcons iconName="target" />
-                <Text style={styles.modalTitleText}>{`Tracking`}</Text>
-              </View>
-              <View style={{paddingRight: wp(4)}}>
-                <LinearGradient
-                  colors={['#F9A9A7', '#C4BDA5', '#92D0A2']}
-                  start={{x: 0, y: 0}}
-                  end={{x: 1, y: 0}}
-                  style={{
-                    width: wp(54),
-                    height: hp(1.5),
-                    borderRadius: wp(100),
-                  }}
-                />
-              </View>
-            </View>
-            <View style={styles.modalSubTitleView}>
-              <SvgIcons iconName="pencil" />
-              <Text style={styles.subTitleText}>{`Edit`}</Text>
-            </View>
-            <View style={styles.modalInputView}>
-              <Text style={styles.modalLabelText}>{`Package Qty:`}</Text>
-              <View style={styles.modalInputContainer}>
-                <TextInput
-                  style={styles.modalInputStyle}
-                  keyboardType="numeric"
-                />
-              </View>
-            </View>
-            <View style={styles.modalInputView}>
-              <Text style={styles.modalLabelText}>{`Checkout Qty:`}</Text>
-              <View style={styles.modalInputContainer}>
-                <TextInput
-                  style={styles.modalInputStyle}
-                  keyboardType="numeric"
-                />
-              </View>
-            </View>
-            <View style={styles.modalButtonContainer}>
-              <CommonButton
-                title={'Save'}
-                onPress={() => setEditModal(false)}
-              />
-            </View>
-          </>
-        }
-      />
+      >
+        <PMSDetailBottomSheetView />
+      </BottomSheet>
 
       <SafeAreaView />
     </View>
@@ -228,61 +177,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderRadius: wp(100),
     backgroundColor: colors.green,
-  },
-  modalTitleView: {
-    width: '100%',
-    paddingTop: wp(7),
-    paddingLeft: wp(7),
-    paddingBottom: wp(7),
-    alignItems: 'center',
-    flexDirection: 'row',
-    alignSelf: 'flex-start',
-    borderBottomWidth: wp(0.2),
-    borderBlockColor: colors.grey,
-  },
-  modalTitleText: {
-    marginLeft: wp(3),
-    color: colors.black,
-    fontSize: fontSize(18),
-    fontFamily: fonts.medium,
-  },
-  modalSubTitleView: {
-    width: '100%',
-    padding: wp(7),
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-  },
-  subTitleText: {
-    marginLeft: wp(3),
-    color: colors.black,
-    fontSize: fontSize(18),
-    fontFamily: fonts.medium,
-  },
-  modalInputView: {
-    width: '72%',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginVertical: hp(1),
-    justifyContent: 'space-between',
-  },
-  modalLabelText: {
-    color: colors.darkGrey,
-    fontSize: fontSize(16),
-    fontFamily: fonts.regular,
-  },
-  modalInputContainer: {
-    width: '55%',
-    borderBottomWidth: wp(0.2),
-    borderBlockColor: colors.grey,
-    paddingVertical: isIos ? hp(1) : 0,
-  },
-  modalInputStyle: {
-    color: colors.black,
-    fontSize: fontSize(15),
-    fontFamily: fonts.regular,
-  },
-  modalButtonContainer: {
-    marginVertical: hp(4.5),
-  },
+  }
 });
