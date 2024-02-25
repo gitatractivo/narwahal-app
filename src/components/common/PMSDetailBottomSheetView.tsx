@@ -15,6 +15,8 @@ const PMSDetailBottomSheetView = ({setEditModal}) => {
     const [strength, setStrength] = useState(0);
     const [triggerPressed, setTriggerPressed] = useState(false);
 
+    const strengthLocal = 0;
+
     useEffect(() => {
         const listener1 = DeviceEventEmitter.addListener('TriggerPress', () => {
             console.log('Trigger Pressed');
