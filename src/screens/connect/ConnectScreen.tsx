@@ -10,6 +10,7 @@ const ConnectScreen = () => {
             ConnectivityModule.connect();
         }
     });
+
     return (
         <View style={{flex: 1, justifyContent: 'space-between', padding: 50}}>
             <TouchableOpacity onPress={(event) => {

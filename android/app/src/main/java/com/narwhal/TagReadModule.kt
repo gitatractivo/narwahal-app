@@ -14,34 +14,39 @@ import com.facebook.react.modules.core.DeviceEventManagerModule
 
 class TagReadModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
-    private val TAG = "TagReadModule"
+    private val tag = "TagReadModule"
 
-    override fun getName() = TAG
+    override fun getName() = tag
 
     @SuppressLint("HandlerLeak")
     private val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
-            Log.d(TAG, msg.toString());
             if (msg.what != SDConsts.Msg.RFMsg) return;
-            if (msg.arg1 != SDConsts.RFCmdMsg.INVENTORY || msg.arg1 != SDConsts.RFCmdMsg.READ) return;
-            if (msg.arg2 == SDConsts.RFResult.SUCCESS) {
-                if (msg.obj != null && msg.obj is String) {
-                    val data = msg.obj as String
-                    Log.d("$TAG data", data);
-                    dispatchEvent(reactContext, "ReadTag", data);
+            if (msg.arg1 == SDConsts.RFCmdMsg.INVENTORY) {
+                if (msg.arg2 == SDConsts.RFResult.SUCCESS) {
+                    if (msg.obj != null && msg.obj is String) {
+                        val data = msg.obj as String
+                        dispatchEvent(reactContext, "ReadTag", data);
+                    }
                 }
+            } else if (msg.arg1 == SDConsts.RFCmdMsg.STOP_INVENTORY) {
+                existingReaderInstance?.RF_StopInventory()
+                existingReaderInstance = null
             }
+
         }
     }
 
+    private var existingReaderInstance: Reader? = null
+
     @ReactMethod
     fun startTagReader() {
-        Log.d(TAG, "Starting tag reading")
-        val reader = Reader.getReader(currentActivity, handler)
-        reader.RF_SetSession(1);
-        val ret = reader.RF_PerformInventory(false, false, true)
-        Log.d("$TAG ret: ", ret.toString())
-        Log.d("$TAG reader: ", reader.toString())
+        Log.d(tag, "Starting tag reading")
+        existingReaderInstance = Reader.getReader(currentActivity, handler)!!
+        existingReaderInstance?.RF_SetSession(1);
+        val ret = existingReaderInstance?.RF_PerformInventory(false, false, true)
+        Log.d("$tag ret: ", ret.toString())
+        Log.d("$tag reader: ", existingReaderInstance.toString())
     }
 
     fun dispatchEvent(

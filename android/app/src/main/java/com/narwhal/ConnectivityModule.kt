@@ -21,8 +21,6 @@ class ConnectivityModule(reactContext: ReactApplicationContext) : ReactContextBa
     @SuppressLint("HandlerLeak")
     private val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
-            Log.d("$tag mes", msg.toString())
-            Log.d("$tag a2", msg.arg2.toString());
             if (msg.what != SDConsts.Msg.SDMsg) return;
             when (msg.arg1) {
                 SDConsts.SDCmdMsg.SLED_WAKEUP -> dispatchEvent(reactContext, "Wakeup", msg.arg2)
@@ -31,28 +29,11 @@ class ConnectivityModule(reactContext: ReactApplicationContext) : ReactContextBa
         }
     }
 
-    init {
-        Log.d("ConnectivityModule", "Current Activity: $currentActivity")
-    }
-
-    init {
-        Log.d("ConnectivityModule", "Loading class")
-    }
-
     @ReactMethod
     fun wakeup(): Boolean {
         val reader = Reader.getReader(currentActivity, handler)
-        var a: Int? = null;
-        var b: Boolean? = null;
-        try {
-            b = reader.SD_Open()
-            a = reader.SD_Wakeup()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        if(a == null) return false
-        return a.let {
-            Log.d("ConnectivityModule", "Trying to connect")
+        if (!reader.SD_Open()) return false
+        return reader.SD_Wakeup().let {
             it == SDConsts.SDResult.SUCCESS || it == SDConsts.SDResult.ALREADY_CONNECTED
         }
     }
