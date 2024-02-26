@@ -117,6 +117,16 @@ export type DetailDataProps = {
   }
   rob: number;
 };
+export type RfidProductProp = {
+  product:{
+    id: string;
+    material_desc: string;
+    maker_desc: string;
+    part_no: string;
+  }
+  rob: number;
+  rfid: string;
+};
 
 
 export type PmsScreenItem = {

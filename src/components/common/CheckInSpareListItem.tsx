@@ -1,31 +1,34 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { DetailListItemProps } from '../../interface/common';
+import { DetailListItemProps, RfidProductProp } from '../../interface/common';
 import { colors, fontSize, fonts, hp, wp } from '../../helper';
 
-const CheckInSpareList = ({ item, onPress }: any) => {
+const CheckInSpareList = ({ item, onPress }: {
+  item: RfidProductProp, onPress:
+    () => void
+}) => {
   return (
     <View
       style={styles.container}>
-      <Text style={styles.titleText}>{item?.title}</Text>
-      <Text style={styles.descText}>{item?.desc}</Text>
-      
+      <Text style={styles.titleText}>{item?.product?.material_desc}</Text>
+      <Text style={styles.descText}>{item?.rob}</Text>
+
 
       <TouchableOpacity activeOpacity={0.7} onPress={onPress} style={styles.innerDiv}>
         <View style={styles.innerHeading}>
-          <Text style={styles.innerHeadingText}>ID: View Details</Text>
+          <Text style={styles.innerHeadingText}>ID: {item.rfid}</Text>
         </View>
         <View style={styles.innerContainer}>
           <View style={styles.flexContainer}>
 
             <View style={styles.spanContainer}>
               <Text >Scanned Qty:</Text>
-              <Text style={styles.valueText}>10</Text>
+              <Text style={styles.valueText}>{item.rob}</Text>
             </View>
             <View style={styles.spanContainer}>
               <Text >Check-in Qty:</Text>
-              <Text style={styles.valueText}>5</Text>
+              <Text style={styles.valueText}>{item.rob}</Text>
             </View>
           </View>
           <View
@@ -33,11 +36,11 @@ const CheckInSpareList = ({ item, onPress }: any) => {
               styles.tagView,
               {
                 backgroundColor:
-                  item?.tag == 'Reconditioned'
+                  false
                     ? colors.orangexLight
                     : colors.greenxLight,
                 borderColor:
-                  item?.tag == 'Reconditioned'
+                  false
                     ? colors.orangeLight
                     : colors.greenLight,
               },
@@ -47,10 +50,10 @@ const CheckInSpareList = ({ item, onPress }: any) => {
                 styles.tagText,
                 {
                   color:
-                    item?.tag == 'Reconditioned' ? colors.orange : colors.green,
+                    false ? colors.orange : colors.green,
                 },
               ]}>
-              {item?.tag}
+              New
             </Text>
           </View>
         </View>
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
     padding: wp(5.5),
     borderBottomWidth: wp(0.2),
     borderBottomColor: colors.grey,
-    flex:1,
+    flex: 1,
     flexDirection: 'column',
     gap: wp(1.5),
   },

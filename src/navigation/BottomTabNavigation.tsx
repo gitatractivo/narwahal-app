@@ -121,20 +121,7 @@ const BottomTabNavigator = () => {
           ),
         }}
       />
-        <Tab.Screen
-            name="ConnectScreen"
-            component={ConnectScreen}
-            options={{
-                tabBarActiveTintColor: 'black',
-                tabBarIcon: ({focused}) => (
-                    <BottomTabItem
-                        focused={focused}
-                        iconName={'checkOut'}
-                        tabTitle={'Connect'}
-                    />
-                ),
-            }}
-        />
+        
     </Tab.Navigator>
   );
 };

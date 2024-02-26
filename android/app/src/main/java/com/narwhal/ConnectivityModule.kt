@@ -48,7 +48,7 @@ class ConnectivityModule(reactContext: ReactApplicationContext) : ReactContextBa
     fun connect(promise: Promise) {
         val reader = Reader.getReader(currentActivity, handler)
         val ret = reader.SD_Connect()
-        Log.d("ConnectivityModule", "Connecting")
+        Log.d(tag, "Connecting $tag")
         val result = (ret == SDConsts.SDResult.SUCCESS || ret == SDConsts.SDResult.ALREADY_CONNECTED)
                 .also { Log.d(tag, "Connect result $it") }
         promise.resolve(result)

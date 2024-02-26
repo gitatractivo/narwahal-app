@@ -25,6 +25,7 @@ class TagReadModule(reactContext: ReactApplicationContext) : ReactContextBaseJav
     @SuppressLint("HandlerLeak")
     private val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
+            Log.d(tag, "Handling message $msg ")
             triggerChecker(msg, reactContext)
             if (!triggerHeld) return
             if (msg.what != SDConsts.Msg.RFMsg) return;
@@ -59,7 +60,6 @@ class TagReadModule(reactContext: ReactApplicationContext) : ReactContextBaseJav
 
     @ReactMethod
     fun startInventoryTask() {
-        Log.d(tag, "Attempting tag read task")
         scanning = true
         Reader.getReader(currentActivity, handler).let {
             it.RF_SetSession(1)
