@@ -53,7 +53,7 @@ const CheckOutScreen = ({ navigation }: any) => {
       const arr = tags
       if (!arr.includes(tag)) {
         arr.push(tag)
-        setTags(prev => [...arr])
+        setTags(prev => [...prev,tag])
       }
     });
 
@@ -73,8 +73,12 @@ const CheckOutScreen = ({ navigation }: any) => {
   }, [tags])
 
   const handleSave = async () => {
+    console.log({
+      "product_id": selectProduct?.product.id,
+      "quantity": quantity
+    })
     try {
-      const resp = await axios.post(`${BASE_URL}/pms/scan_products?scan_type=checkin`, [
+      const resp = await axios.post(`${BASE_URL}/pms/scan_products?scan_type=checkout`, [
         {
           "product_id": selectProduct?.product.id,
           "quantity": quantity
@@ -85,6 +89,8 @@ const CheckOutScreen = ({ navigation }: any) => {
       setQuantity(0)
     } catch (error) {
       console.log(error)
+      setEditModal(false)
+
     }
   }
 
@@ -99,7 +105,21 @@ const CheckOutScreen = ({ navigation }: any) => {
           }
         })
 
-      console.log('produckts', products.data)
+      const pro = products.data.map((product: any, index:number) => {
+        return {
+          product: {
+            id: product.id,
+            material_desc: product.maker_desc,
+            maker_desc: product.material_desc,
+            part_no: product.part_no
+          },
+          rob: 1,
+          rfid: tags[index]
+        }
+      }
+      )
+      setProducts(pro)
+
     } catch (error) {
       console.log('error', error)
     }
@@ -107,11 +127,15 @@ const CheckOutScreen = ({ navigation }: any) => {
       setIsLoading(false)
     }
   }
+  const handleSelect = (item: any) => {
+    setSelectProduct(item);
+    setEditModal(true);
+  }
 
  
 
   const renderCheckOutList = ({ item }: any) => {
-    return <CheckOutListItem item={item} onPress={() => { }} />;
+    return <CheckOutListItem item={item} onPress={() => handleSelect(item)} />;
   };
 
 
@@ -129,9 +153,9 @@ const CheckOutScreen = ({ navigation }: any) => {
         </View>
       ) : <FlatList
         bounces={false}
-        data={checkOutList}
+          data={products}
         renderItem={renderCheckOutList}
-        keyExtractor={item => item?.id?.toString()}
+          keyExtractor={(item, index) => index.toString()}
         contentContainerStyle={commonStyles.contentContainerStyle}
       />}
 

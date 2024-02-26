@@ -59,11 +59,12 @@ function Spares({ navigation }: any) {
       const arr = tags
       if (!arr.includes(tag)) {
         arr.push(tag)
-        setTags(prev => [...arr])
+        setTags(prev => [...prev,tag])
       }
     });
 
     return () => {
+      console.log("cleanup")
       TagReadModule.stopInventoryTask();
       sub.remove()
     }
@@ -104,8 +105,25 @@ function Spares({ navigation }: any) {
             'accept': 'application/json'
           }
         })
+      console.log('produckts',products.data)
+      const pro = products.data.map((product:any,index:number)=>{
+        return{
+          product:{
+            id: product.id,
+            material_desc: product.maker_desc,
+            maker_desc: product.material_desc,
+            part_no: product.part_no
+          },
+          rob:1,
+          rfid:tags[index]
+          }
+        }
+      )
+      setProducts(pro)
 
-      console.log('produckts', products.data)
+        // / { "id": "VS.BWS.9008144", "maker_desc": "GEORIM ENGINEERING CO., LTD.", "material_desc": "OVERCURRENT RELAY", "part_no": "GR-100-002-10" }
+
+     
     } catch (error) {
       console.log('error', error)
     }
