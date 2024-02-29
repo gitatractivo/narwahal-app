@@ -1,113 +1,106 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-import { DetailListItemProps } from '../../interface/common';
-import { colors, fontSize, fonts, hp, wp } from '../../helper';
+import {colors, fontSize, fonts, wp} from '../../helper';
 
-const DetailListItem = ({ item, onPress }: DetailListItemProps) => {
-  console.log("item:",item)
+const CheckInDockListItem = ({item, onPress}: any) => {
   return (
-      <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={onPress}
-          style={styles.container}>
-        <Text style={styles.titleText}>{item?.material_desc}</Text>
-        <View style={styles.tagContainer}>
-          <View style={styles.tagView}>
-            <Text style={styles.tagText}>{item?.maker_desc}</Text>
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.7}
+      style={styles.container}>
+      <View style={styles.titleView}>
+        <View style={styles.titleSubView}>
+          <Text numberOfLines={1} style={styles.titleText}>
+            {`PO NO.- ${item?.PoNo}`}
+          </Text>
+          <View
+            style={[
+              styles.tagView,
+              {
+                backgroundColor:
+                  item?.tag == 'Received'
+                    ? colors.greenxLight
+                    : item?.tag == 'Partial'
+                    ? colors.purplexLight
+                    : colors.redxLight,
+                borderColor:
+                  item?.tag == 'Received'
+                    ? colors.greenLight
+                    : item?.tag == 'Partial'
+                    ? colors.purpleLight
+                    : colors.redLight,
+              },
+            ]}>
+            <Text
+              style={[
+                styles.tagText,
+                {
+                  color:
+                    item?.tag == 'Received'
+                      ? colors.green
+                      : item?.tag == 'Partial'
+                      ? colors.purple
+                      : colors.red,
+                },
+              ]}>
+              {item?.tag}
+            </Text>
           </View>
-          <Text style={styles.uniqText}>{item?.id}</Text>
         </View>
-
-        <View style={styles.qtyContainer}>
-          <View>
-            <Text style={styles.uniqText}>ROB:</Text>
-            {/* <Text style={styles.uniqText}>{Pkg. Qty:}</Text> */}
-          </View>
-          <View>
-            <Text style={styles.qtyText}>{item?.rob}</Text>
-            {/* <Text style={styles.qtyText}>{item?.pkgQty}</Text> */}
-          </View>
-          <View style={styles.qtySubView}>
-            {/* <Text style={styles.uniqText}>{Working & Replace:}</Text>
-          <Text style={styles.uniqText}>{Checkout Qty:}</Text> */}
-          </View>
-          <View>
-            {/* <Text style={styles.qtyText}>{item?.workingReplace}</Text>
-          <Text style={styles.qtyText}>{item?.checkoutQty}</Text> */}
-          </View>
-        </View>
-        <View style={styles.greenDot} />
-      </TouchableOpacity>
+        <Text style={styles.dateText}>{item?.date}</Text>
+      </View>
+      <Text numberOfLines={1} style={styles.descText}>
+        {item?.desc}
+      </Text>
+    </TouchableOpacity>
   );
 };
 
-export default DetailListItem;
+export default CheckInDockListItem;
 
 const styles = StyleSheet.create({
   container: {
-    padding: wp(5.5),
+    flex: 1,
+    padding: wp(5),
     borderBottomWidth: wp(0.2),
-    borderBottomColor: colors.grey,
+    borderBlockColor: colors.grey,
+  },
+  titleView: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  titleSubView: {
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   titleText: {
     color: colors.black,
-    fontSize: fontSize(15),
-    fontFamily: fonts.medium,
-  },
-  tagContainer: {
-    marginTop: wp(1.5),
-    alignItems: 'center',
-    flexDirection: 'row',
+    fontSize: fontSize(16),
+    fontFamily: fonts.regular,
   },
   tagView: {
+    marginLeft: wp(2),
     borderWidth: wp(0.2),
-    marginRight: wp(4.5),
     paddingVertical: wp(1),
     borderRadius: wp(1.33),
     paddingHorizontal: wp(3),
-    borderColor: colors.orangeLight,
-    backgroundColor: colors.orangexLight,
   },
   tagText: {
-    color: colors.orange,
     fontSize: fontSize(12),
     fontFamily: fonts.medium,
   },
-  qtyContainer: {
-    marginTop: hp(3),
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  qtySubView: {
-    marginLeft: wp(8),
-  },
-  uniqText: {
-    marginTop: hp(1),
-    marginRight: wp(3),
+  dateText: {
     color: colors.darkGrey,
     fontSize: fontSize(13),
-    fontFamily: fonts.regular,
-  },
-  qtyText: {
-    marginTop: hp(1),
-    color: colors.black,
-    fontSize: fontSize(15),
     fontFamily: fonts.medium,
   },
-  bottomSheetView: {
-    alignItems: 'center',
-    borderTopLeftRadius: wp(6.5),
-    borderTopRightRadius: wp(6.5),
-    backgroundColor: colors.white,
-  },
-  greenDot: {
-    top: wp(3),
-    width: wp(3),
-    right: wp(3),
-    height: wp(3),
-    position: 'absolute',
-    borderRadius: wp(100),
-    backgroundColor: colors.green,
+  descText: {
+    marginTop: wp(2),
+    fontSize: fontSize(12),
+    color: colors.darkGrey,
+    fontFamily: fonts.regular,
   },
 });

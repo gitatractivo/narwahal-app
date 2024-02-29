@@ -5,14 +5,14 @@ import SvgIcons from '../../helper/SvgIcons';
 import {FABProps} from '../../interface/common';
 import {colors, fontSize, hp, wp, fonts} from '../../helper/index';
 
-const FAB = ({ onPress, status }: FABProps) => {
+const FAB = ({onPress, status}: FABProps) => {
   return (
     <TouchableOpacity
       activeOpacity={0.9}
       style={[styles.roundButton, styles.shadowStyle]}
       onPress={onPress}>
       <SvgIcons iconName="checkMark" />
-      <Text style={styles.plusStyle}>{status}</Text>
+      {status && <Text style={styles.titleText}>{status}</Text>}
     </TouchableOpacity>
   );
 };
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(4),
     backgroundColor: colors.primary,
   },
-  plusStyle: {
+  titleText: {
     marginLeft: wp(1),
     color: colors.white,
     fontSize: fontSize(18),

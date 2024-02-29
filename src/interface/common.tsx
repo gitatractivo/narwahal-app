@@ -91,7 +91,9 @@ export interface SearchBoxProps {
 
 export type BottomSheetProps = {
   isVisible: boolean;
+  handleBar?: boolean;
   closeSheet: () => void;
+  customStyle?: StyleProp<ViewStyle>;
   children: ReactElement[] | ReactElement;
 };
 
@@ -109,25 +111,24 @@ export type SailingDataProps = {
   title: string | any;
 };
 export type DetailDataProps = {
-  product:{
+  product: {
     id: string;
     material_desc: string;
     maker_desc: string;
     part_no: string;
-  }
+  };
   rob: number;
 };
 export type RfidProductProp = {
-  product:{
+  product: {
     id: string;
     material_desc: string;
     maker_desc: string;
     part_no: string;
-  }
+  };
   rob: number;
   rfid: string;
 };
-
 
 export type PmsScreenItem = {
   id: number;
@@ -136,9 +137,7 @@ export type PmsScreenItem = {
   description: string;
   status: string;
   pic: number;
-  interval: number
-}
+  interval: number;
+};
 
-export type PmsProduct = {
-
-}
+export type PmsProduct = {};

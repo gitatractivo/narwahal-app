@@ -1,57 +1,44 @@
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import PMSscreen from '../../screens/pms/PMSscreen';
-import { NavigationContainer } from '@react-navigation/native';
-import { ActivityIndicator, FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ListItem, SearchBox } from '../../components';
+import {useEffect, useState} from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import {FilterBar, ListItem} from '../../components';
 import {
   BASE_URL,
   colors,
   commonStyles,
   fontSize,
   fonts,
-  hp,
   sailingData,
   wp,
 } from '../../helper';
-import SvgIcons from '../../helper/SvgIcons';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { PmsScreenItem } from '../../interface/common';
-import { Dropdown } from 'react-native-element-dropdown';
+import {PmsScreenItem} from '../../interface/common';
 
-const Tab = createMaterialTopTabNavigator();
 
-const data = [
-  { label: 'Completed', value: 'completed' },
-  { label: 'Planning', value: 'planning' },
-  { label: 'In Progress', value: 'in_progress' },
-
-];
-const durationData = [
-  { label: 'Daily', value: 'daily' },
-  { label: 'Monthly', value: 'weekly' },
-  { label: 'Weekly', value: 'monthly' },
-
-];
-
-function Sailing({ navigation }: any) {
+export function Sailing({navigation}: any) {
   const [value, setValue] = useState<string>('planning');
-  const [due, setDue] = useState<string>("daily");
+  const [due, setDue] = useState<string>('daily');
   const [sailingData, setSailingData] = useState<PmsScreenItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
-
   const getData = async () => {
     try {
-      const resp = await axios.get(`${BASE_URL}/pms/jobs?status=${value}&due_within=${due}`);
+      const resp = await axios.get(
+        `${BASE_URL}/pms/jobs?status=${value}&due_within=${due}`,
+      );
       setSailingData(resp.data);
     } catch (error) {
       console.log(error);
-
     } finally {
       setIsLoading(false);
-      setRefreshing(false)
+      setRefreshing(false);
     }
   };
 
@@ -60,12 +47,11 @@ function Sailing({ navigation }: any) {
     getData();
   }, [value, due]);
   const handleRefresh = () => {
-    setRefreshing(true)
-    getData()
+    setRefreshing(true);
+    getData();
+  };
 
-  }
-
-  const renderSailingList = ({ item }: any) => {
+  const renderSailingList = ({item}: any) => {
     return (
       <ListItem
         item={item}
@@ -73,86 +59,51 @@ function Sailing({ navigation }: any) {
           navigation.navigate('PMSdetailScreen', {
             id: item?.id,
             description: item?.description,
-            status: item?.status
-
-
+            status: item?.status,
           })
         }
       />
     );
   };
 
+  const onStatusUpdatePress = (updatedStatus:string) => {
+    setValue(updatedStatus)
+  }
+
+  const onPeriodUpdatePress = (updatedPeriod:string) => {
+    setDue(updatedPeriod)
+  }
+
   return (
     <View style={commonStyles.root}>
-      <View style={styles.statusBarView}>
-        <TouchableOpacity style={styles.flexRow}>
-          <Text style={styles.dailyText}>{`Daily`}</Text>
-          <Dropdown
-            style={styles.dropdown2}
-            placeholderStyle={styles.placeholderStyle2}
-            selectedTextStyle={styles.selectedTextStyle2}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={durationData}
-            // search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder="Select item"
-            value={due}
-            onChange={item => {
-              setDue(item.value);
-            }}
-          // renderLeftIcon={() => (
-          //   <SvgIcons iconName="downArrow" />
-          // )}
-          />
-        </TouchableOpacity>
-        <View style={styles.flexRow}>
-          <Text style={styles.stausText}>{`Status:`}</Text>
-          <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={data}
-            // search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder="Select item"
-            value={value}
-            onChange={item => {
-              setValue(item.value);
-            }}
-          // renderLeftIcon={() => (
-          //   <SvgIcons iconName="downArrow" />
-          // )}
-          />
-        </View>
-      </View>
+        <FilterBar 
+          isPeriodVisible 
+          onStatusUpdate={onStatusUpdatePress} 
+          onPeriodUpdate={onPeriodUpdatePress}
+        />
 
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="2e2e2e" />
           <Text>Loading...</Text>
         </View>
-      ) : (<FlatList
-        bounces={false}
-        data={sailingData}
-        renderItem={renderSailingList}
-        keyExtractor={item => item?.id?.toString()}
-        contentContainerStyle={commonStyles.contentContainerStyle}
-        refreshing={refreshing}
-        onRefresh={handleRefresh}
-      />)}
+      ) : (
+        <FlatList
+          bounces={false}
+          data={sailingData}
+          renderItem={renderSailingList}
+          keyExtractor={item => item?.id?.toString()}
+          contentContainerStyle={commonStyles.contentContainerStyle}
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+        />
+      )}
     </View>
   );
 }
 
-function Port({ navigation }: any) {
-  const renderSailingList = ({ item }: any) => {
+export function Port({navigation}: any) {
+  const renderSailingList = ({item}: any) => {
     return (
       <ListItem
         item={item}
@@ -168,20 +119,7 @@ function Port({ navigation }: any) {
 
   return (
     <View style={commonStyles.root}>
-      <View style={styles.statusBarView}>
-        <TouchableOpacity style={styles.flexRow}>
-          <Text style={styles.dailyText}>{`Daily`}</Text>
-          <SvgIcons iconName="downArrow" />
-        </TouchableOpacity>
-        <View style={styles.flexRow}>
-          <Text style={styles.stausText}>{`Status:`}</Text>
-          <TouchableOpacity style={styles.flexRow}>
-            <Text style={styles.completedText}>{`Completed`}</Text>
-            <SvgIcons iconName="downArrow" />
-          </TouchableOpacity>
-        </View>
-      </View>
-
+      <FilterBar isPeriodVisible />
       <FlatList
         bounces={false}
         data={sailingData}
@@ -193,8 +131,8 @@ function Port({ navigation }: any) {
   );
 }
 
-function Dock({ navigation }: any) {
-  const renderSailingList = ({ item }: any) => {
+export function Dock({navigation}: any) {
+  const renderSailingList = ({item}: any) => {
     return (
       <ListItem
         item={item}
@@ -209,20 +147,7 @@ function Dock({ navigation }: any) {
   };
   return (
     <View style={commonStyles.root}>
-      <View style={styles.statusBarView}>
-        <TouchableOpacity style={styles.flexRow}>
-          <Text style={styles.dailyText}>{`Daily`}</Text>
-          <SvgIcons iconName="downArrow" />
-        </TouchableOpacity>
-        <View style={styles.flexRow}>
-          <Text style={styles.stausText}>{`Status:`}</Text>
-          <TouchableOpacity style={styles.flexRow}>
-            <Text style={styles.completedText}>{`Completed`}</Text>
-            <SvgIcons iconName="downArrow" />
-          </TouchableOpacity>
-        </View>
-      </View>
-
+      <FilterBar isPeriodVisible />
       <FlatList
         bounces={false}
         data={sailingData}
@@ -232,44 +157,6 @@ function Dock({ navigation }: any) {
       />
     </View>
   );
-}
-
-function MyTabs() {
-  return (
-    <Tab.Navigator
-      initialRouteName="Sailing"
-      screenOptions={{
-        tabBarActiveTintColor: colors.black,
-        tabBarInactiveTintColor: colors.darkGrey,
-        tabBarLabelStyle: {
-          fontSize: fontSize(15),
-          fontFamily: fonts.medium,
-          textTransform: 'none',
-        },
-        tabBarStyle: { backgroundColor: colors.white },
-        tabBarIndicatorStyle: { backgroundColor: colors.black },
-      }}>
-      <Tab.Screen
-        name="Sailing"
-        component={Sailing}
-        options={{ tabBarLabel: 'Sailing' }}
-      />
-      <Tab.Screen
-        name="Port"
-        component={Port}
-        options={{ tabBarLabel: 'Port' }}
-      />
-      <Tab.Screen
-        name="Dock"
-        component={Dock}
-        options={{ tabBarLabel: 'Dock' }}
-      />
-    </Tab.Navigator>
-  );
-}
-
-export default function PMSTopBarNavigation() {
-  return <MyTabs />;
 }
 
 const styles = StyleSheet.create({
@@ -296,7 +183,7 @@ const styles = StyleSheet.create({
     height: 40,
     fontSize: 16,
   },
-  
+
   selectedTextStyle: {
     fontSize: fontSize(11),
     color: '#0FABA6',
@@ -336,16 +223,16 @@ const styles = StyleSheet.create({
     fontSize: fontSize(11),
     fontFamily: fonts.medium,
   },
-  
+
   selectedTextStyle2: {
-  fontSize: fontSize(11),
-  fontFamily: fonts.medium,
-},
-  
+    fontSize: fontSize(11),
+    fontFamily: fonts.medium,
+  },
+
   loadingContainer: {
-  flex: 1,
-  paddingTop: StatusBar.currentHeight,
-  justifyContent: "center",
-  alignItems: "center"
-},
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

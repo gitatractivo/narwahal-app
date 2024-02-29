@@ -13,8 +13,6 @@ import SvgIcons from '../../helper/SvgIcons';
 
 const { TagReadModule } = NativeModules;
 
-type Props = {};
-
 const CheckOutScreen = ({ navigation }: any) => {
   const [editModal, setEditModal] = useState<boolean>(false);
   const [tags, setTags] = useState<string[]>([])

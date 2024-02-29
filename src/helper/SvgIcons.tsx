@@ -42,6 +42,28 @@ const GetIconFromLibrary = (name: string) => {
       return Icons.Wrench;
     case 'chevronRight':
       return Icons.ChevronRight;
+    case 'pin':
+      return Icons.Pin;
+    case 'menuClose':
+      return Icons.MenuClose;
+    case 'connectivity':
+      return Icons.Connectivity;
+    case 'deviceInfo':
+      return Icons.DeviceInfo;
+    case 'setting':
+      return Icons.Setting;
+    case 'queMarkBlue':
+      return Icons.QueMarkBlue;
+    case 'scanningFiles':
+      return Icons.ScanningFiles;
+    case 'manage':
+      return Icons.Manage;
+    case 'addFiles':
+      return Icons.AddFiles;
+    case 'scanFile':
+      return Icons.ScanFile;
+    case 'close':
+      return Icons.Close;
 
     default:
       return Icons.Target;

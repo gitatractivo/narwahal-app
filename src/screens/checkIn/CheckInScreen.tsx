@@ -1,11 +1,9 @@
-import { StyleSheet, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
+import React, { useState } from 'react';
 import { BASE_URL, commonStyles } from '../../helper';
 import { FAB, SearchBox } from '../../components';
-import CheckInTopBarNavigation from '../../navigation/topBarTabs/CheckInTopBarNavigation';
-
-
-type Props = {};
+import CustomTopTabs from '../../navigation/topBarTabs/CustomTopTabs';
+import { CheckInTopTabs } from '../../navigation/topBarTabs/TopTabsData';
 
 const CheckInScreen = () => {
   const [searchText, setSearchText] = useState<string>('');
@@ -21,14 +19,10 @@ const CheckInScreen = () => {
         value={searchText}
         onChangeText={text => setSearchText(text)}
       />
-      <CheckInTopBarNavigation  />
+     <CustomTopTabs screens={CheckInTopTabs} />
       <FAB status={'Confirm'} onPress={() => { }} />
     </View>
   );
 };
 
 export default CheckInScreen;
-
-const styles = StyleSheet.create({});
-
-

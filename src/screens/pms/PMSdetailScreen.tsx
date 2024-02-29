@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -20,11 +20,11 @@ import {
   DetailListItem,
 } from '../../components';
 import SvgIcons from '../../helper/SvgIcons';
-import { commonStyles, BASE_URL} from '../../helper';
+import {commonStyles, BASE_URL} from '../../helper';
 import {DetailDataProps, PMSdetailScreenProps} from '../../interface/common';
 import {hp, wp, fonts, isIos, colors, fontSize} from '../../helper';
 import axios from 'axios';
-import PMSDetailBottomSheetView from "../../components/common/PMSDetailBottomSheetView.tsx";
+import PMSDetailBottomSheetView from '../../components/common/PMSDetailBottomSheetView.tsx';
 
 const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
   const id = route?.params?.id;
@@ -37,7 +37,6 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [detailData, setdetailData] = useState<DetailDataProps[]>();
 
-
   const getData = async () => {
     try {
       console.log(`${BASE_URL}/pms/products?job_id=${id}`);
@@ -46,7 +45,6 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
       setdetailData(resp.data);
     } catch (error) {
       console.log(error);
-
     } finally {
       setIsLoading(false);
       setRefreshing(false);
@@ -57,27 +55,28 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
     getData();
   }, [id]);
 
-
   const handleStatusChange = async () => {
     try {
-      let status_update = "completed";
-      if (status === "planning") {
-        status_update = "in_progress";
+      let status_update = 'completed';
+      if (status === 'planning') {
+        status_update = 'in_progress';
       }
-      console.log(`${BASE_URL}/pms/jobs/status?job_id=${id}&status_update=${status_update}`)
-      const resp = await axios.put(`${BASE_URL}/pms/jobs/status?job_id=${id}&status_update=${status_update}`);
+      console.log(
+        `${BASE_URL}/pms/jobs/status?job_id=${id}&status_update=${status_update}`,
+      );
+      const resp = await axios.put(
+        `${BASE_URL}/pms/jobs/status?job_id=${id}&status_update=${status_update}`,
+      );
 
-      console.log(resp)
+      console.log(resp);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
-  }
+  };
   const handleRefresh = () => {
     setRefreshing(true);
     getData();
-
-  }
+  };
 
   const renderDetail = ({item}: any) => {
     return <DetailListItem item={item} onPress={() => setEditModal(true)} />;
@@ -101,22 +100,25 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
           <ActivityIndicator size="large" color="2e2e2e" />
           <Text>Loading...</Text>
         </View>
-      ) : (<FlatList
-        bounces={false}
-        data={detailData}
-        renderItem={renderDetail}
-        keyExtractor={(item, index) => index.toString()}
-        contentContainerStyle={commonStyles.contentContainerStyle} refreshing={refreshing}
-        onRefresh={handleRefresh}
-      />)}
+      ) : (
+        <FlatList
+          bounces={false}
+          data={detailData}
+          renderItem={renderDetail}
+          keyExtractor={(item, index) => index.toString()}
+          contentContainerStyle={commonStyles.contentContainerStyle}
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+        />
+      )}
 
-      <FAB status={status as string} onPress={() => {
-        handleStatusChange()
-      }} />
-      <BottomSheet
-        isVisible={editModal}
-        closeSheet={() => setEditModal(false)}
-      >
+      <FAB
+        status={status as string}
+        onPress={() => {
+          handleStatusChange();
+        }}
+      />
+      <BottomSheet isVisible={editModal} closeSheet={() => setEditModal(false)}>
         <PMSDetailBottomSheetView />
       </BottomSheet>
 
@@ -136,8 +138,8 @@ const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   titleText: {
     color: colors.black,
@@ -177,5 +179,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderRadius: wp(100),
     backgroundColor: colors.green,
-  }
+  },
 });

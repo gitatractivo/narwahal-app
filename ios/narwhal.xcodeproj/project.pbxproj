@@ -12,16 +12,16 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		16C9C6096DDA4B00B923DABA /* DMSans-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D66B1292EF3045ABA8788CA6 /* DMSans-ExtraLight.ttf */; };
+		41EE9E26FB8341389988EC8A /* DMSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F633C7AA613F40209ACE5135 /* DMSans-ExtraBold.ttf */; };
+		6316C38026774003BCC2622E /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 857C8313E6434C1A8C5952B7 /* DMSans-Medium.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-narwhal-narwhalTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-narwhal-narwhalTests.a */; };
+		800AD379E97B4875982A4074 /* DMSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCE1BF380F7A4067A0E448BB /* DMSans-Light.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		CFDB1FCF72D445828BE04790 /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7429A659052F43A7810C7341 /* DMSans-Bold.ttf */; };
-		41EE9E26FB8341389988EC8A /* DMSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F633C7AA613F40209ACE5135 /* DMSans-ExtraBold.ttf */; };
-		16C9C6096DDA4B00B923DABA /* DMSans-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D66B1292EF3045ABA8788CA6 /* DMSans-ExtraLight.ttf */; };
-		800AD379E97B4875982A4074 /* DMSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCE1BF380F7A4067A0E448BB /* DMSans-Light.ttf */; };
-		6316C38026774003BCC2622E /* DMSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 857C8313E6434C1A8C5952B7 /* DMSans-Medium.ttf */; };
-		FE77A4A7BE9A4F3A8B0D1DE8 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66458BF775D6478B8997D0A9 /* DMSans-Regular.ttf */; };
 		E46E1905BA37477294FB2F90 /* DMSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1927DA36A4994C608CFD2E3E /* DMSans-SemiBold.ttf */; };
 		E6D1909259DD42C28E23887B /* DMSans-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 493BC39532604B6D9EE08741 /* DMSans-Thin.ttf */; };
+		FE77A4A7BE9A4F3A8B0D1DE8 /* DMSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66458BF775D6478B8997D0A9 /* DMSans-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,22 +44,22 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = narwhal/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = narwhal/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = narwhal/main.m; sourceTree = "<group>"; };
+		1927DA36A4994C608CFD2E3E /* DMSans-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-SemiBold.ttf"; path = "../assets/fonts/DMSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-narwhal-narwhalTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-narwhal-narwhalTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-narwhal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-narwhal.debug.xcconfig"; path = "Target Support Files/Pods-narwhal/Pods-narwhal.debug.xcconfig"; sourceTree = "<group>"; };
+		493BC39532604B6D9EE08741 /* DMSans-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Thin.ttf"; path = "../assets/fonts/DMSans-Thin.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-narwhal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-narwhal.release.xcconfig"; path = "Target Support Files/Pods-narwhal/Pods-narwhal.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-narwhal-narwhalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-narwhal-narwhalTests.debug.xcconfig"; path = "Target Support Files/Pods-narwhal-narwhalTests/Pods-narwhal-narwhalTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-narwhal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-narwhal.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		66458BF775D6478B8997D0A9 /* DMSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Regular.ttf"; path = "../assets/fonts/DMSans-Regular.ttf"; sourceTree = "<group>"; };
+		7429A659052F43A7810C7341 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Bold.ttf"; path = "../assets/fonts/DMSans-Bold.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = narwhal/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		857C8313E6434C1A8C5952B7 /* DMSans-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Medium.ttf"; path = "../assets/fonts/DMSans-Medium.ttf"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-narwhal-narwhalTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-narwhal-narwhalTests.release.xcconfig"; path = "Target Support Files/Pods-narwhal-narwhalTests/Pods-narwhal-narwhalTests.release.xcconfig"; sourceTree = "<group>"; };
+		D66B1292EF3045ABA8788CA6 /* DMSans-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-ExtraLight.ttf"; path = "../assets/fonts/DMSans-ExtraLight.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		7429A659052F43A7810C7341 /* DMSans-Bold.ttf */ = {isa = PBXFileReference; name = "DMSans-Bold.ttf"; path = "../assets/fonts/DMSans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		F633C7AA613F40209ACE5135 /* DMSans-ExtraBold.ttf */ = {isa = PBXFileReference; name = "DMSans-ExtraBold.ttf"; path = "../assets/fonts/DMSans-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D66B1292EF3045ABA8788CA6 /* DMSans-ExtraLight.ttf */ = {isa = PBXFileReference; name = "DMSans-ExtraLight.ttf"; path = "../assets/fonts/DMSans-ExtraLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		FCE1BF380F7A4067A0E448BB /* DMSans-Light.ttf */ = {isa = PBXFileReference; name = "DMSans-Light.ttf"; path = "../assets/fonts/DMSans-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		857C8313E6434C1A8C5952B7 /* DMSans-Medium.ttf */ = {isa = PBXFileReference; name = "DMSans-Medium.ttf"; path = "../assets/fonts/DMSans-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		66458BF775D6478B8997D0A9 /* DMSans-Regular.ttf */ = {isa = PBXFileReference; name = "DMSans-Regular.ttf"; path = "../assets/fonts/DMSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		1927DA36A4994C608CFD2E3E /* DMSans-SemiBold.ttf */ = {isa = PBXFileReference; name = "DMSans-SemiBold.ttf"; path = "../assets/fonts/DMSans-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		493BC39532604B6D9EE08741 /* DMSans-Thin.ttf */ = {isa = PBXFileReference; name = "DMSans-Thin.ttf"; path = "../assets/fonts/DMSans-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F633C7AA613F40209ACE5135 /* DMSans-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-ExtraBold.ttf"; path = "../assets/fonts/DMSans-ExtraBold.ttf"; sourceTree = "<group>"; };
+		FCE1BF380F7A4067A0E448BB /* DMSans-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Light.ttf"; path = "../assets/fonts/DMSans-Light.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +122,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5A450E98D26542ABA0C4501E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7429A659052F43A7810C7341 /* DMSans-Bold.ttf */,
+				F633C7AA613F40209ACE5135 /* DMSans-ExtraBold.ttf */,
+				D66B1292EF3045ABA8788CA6 /* DMSans-ExtraLight.ttf */,
+				FCE1BF380F7A4067A0E448BB /* DMSans-Light.ttf */,
+				857C8313E6434C1A8C5952B7 /* DMSans-Medium.ttf */,
+				66458BF775D6478B8997D0A9 /* DMSans-Regular.ttf */,
+				1927DA36A4994C608CFD2E3E /* DMSans-SemiBold.ttf */,
+				493BC39532604B6D9EE08741 /* DMSans-Thin.ttf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,22 +180,6 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		5A450E98D26542ABA0C4501E /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				7429A659052F43A7810C7341 /* DMSans-Bold.ttf */,
-				F633C7AA613F40209ACE5135 /* DMSans-ExtraBold.ttf */,
-				D66B1292EF3045ABA8788CA6 /* DMSans-ExtraLight.ttf */,
-				FCE1BF380F7A4067A0E448BB /* DMSans-Light.ttf */,
-				857C8313E6434C1A8C5952B7 /* DMSans-Medium.ttf */,
-				66458BF775D6478B8997D0A9 /* DMSans-Regular.ttf */,
-				1927DA36A4994C608CFD2E3E /* DMSans-SemiBold.ttf */,
-				493BC39532604B6D9EE08741 /* DMSans-Thin.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
