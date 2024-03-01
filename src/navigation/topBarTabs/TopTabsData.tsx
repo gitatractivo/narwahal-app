@@ -59,6 +59,10 @@ function Inventory2StackScreen() {
     <Inventory2Stack.Navigator screenOptions={{headerShown: false}}>
       <Inventory2Stack.Screen name="SecondFloor" component={SecondFloor} />
       <Inventory2Stack.Screen
+        name="InventorySubListScreen"
+        component={InventorySubListScreen}
+      />
+      <Inventory2Stack.Screen
         name="InventoryDetailScreen"
         component={InventoryDetailScreen}
       />
@@ -71,6 +75,10 @@ function Inventory3StackScreen() {
     <Inventory3Stack.Navigator screenOptions={{headerShown: false}}>
       <Inventory3Stack.Screen name="ThirdFloor" component={ThirdFloor} />
       <Inventory3Stack.Screen
+        name="InventorySubListScreen"
+        component={InventorySubListScreen}
+      />
+      <Inventory3Stack.Screen
         name="InventoryDetailScreen"
         component={InventoryDetailScreen}
       />
@@ -82,6 +90,10 @@ function InventoryBosunStackScreen() {
   return (
     <InventoryBosunStack.Navigator screenOptions={{headerShown: false}}>
       <InventoryBosunStack.Screen name="BosunStore" component={BosunStore} />
+      <InventoryBosunStack.Screen
+        name="InventorySubListScreen"
+        component={InventorySubListScreen}
+      />
       <InventoryBosunStack.Screen
         name="InventoryDetailScreen"
         component={InventoryDetailScreen}

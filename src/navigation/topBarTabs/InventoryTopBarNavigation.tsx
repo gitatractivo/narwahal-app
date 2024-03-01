@@ -56,7 +56,7 @@ export function SecondFloor({navigation}: any) {
       <InventorySecondListItem
         item={item}
         onPress={() =>
-          navigation.navigate('InventoryDetailScreen', {
+          navigation.navigate('InventorySubListScreen', {
             title: item?.title,
           })
         }
@@ -99,7 +99,7 @@ export function ThirdFloor({navigation}: any) {
       <InventorySecondListItem
         item={item}
         onPress={() =>
-          navigation.navigate('InventoryDetailScreen', {
+          navigation.navigate('InventorySubListScreen', {
             title: item?.title,
           })
         }
@@ -142,7 +142,7 @@ export function BosunStore({navigation}: any) {
       <InventorySecondListItem
         item={item}
         onPress={() =>
-          navigation.navigate('InventoryDetailScreen', {
+          navigation.navigate('InventorySubListScreen', {
             title: item?.title,
           })
         }
