@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, FlatList} from 'react-native';
 
 import {checkInDetailList} from '../../helper/dataConstant';
 import {CheckInDetailListItem, FAB, FilterBar} from '../../components';
-import {colors, commonStyles, fontSize, fonts, wp} from '../../helper';
+import {ListFooterComponent, colors, commonStyles, fontSize, fonts, wp} from '../../helper';
 
 const CheckInDetailScreen = () => {
   const renderDetail = ({item}: any) => {
@@ -27,7 +27,7 @@ const CheckInDetailScreen = () => {
         data={checkInDetailList}
         renderItem={renderDetail}
         keyExtractor={item => item?.id?.toString()}
-        contentContainerStyle={commonStyles.contentContainerStyle}
+        ListFooterComponent={ListFooterComponent}
       />
       <FAB status={'Confirm'} onPress={() => {}} />
     </View>

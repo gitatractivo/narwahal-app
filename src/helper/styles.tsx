@@ -10,7 +10,8 @@ export const commonStyles = StyleSheet.create({
   flex: {
     flex: 1,
   },
-  contentContainerStyle: {
-    paddingBottom: hp(20),
-  },
+  flexRow: {
+    flexDirection:'row', 
+    alignItems:'center',
+  }
 });

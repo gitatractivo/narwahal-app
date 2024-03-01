@@ -64,6 +64,14 @@ const GetIconFromLibrary = (name: string) => {
       return Icons.ScanFile;
     case 'close':
       return Icons.Close;
+    case 'scanComplete':
+      return Icons.ScanComplete;
+    case 'plus':
+      return Icons.Plus;
+    case 'scanQR':
+      return Icons.ScanQR;
+    case 'barcodeReader':
+      return Icons.BarcodeReader;
 
     default:
       return Icons.Target;

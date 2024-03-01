@@ -53,7 +53,8 @@ export interface ShadowProps {
   shadowStyle?: StyleProp<ViewStyle>;
 }
 export interface FABProps {
-  status: string;
+  status?: string;
+  iconName?: string;
   onPress: () => void;
 }
 export type SvgIconsProps = {

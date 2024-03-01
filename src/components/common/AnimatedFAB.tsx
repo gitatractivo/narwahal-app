@@ -13,9 +13,9 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import SvgIcons from '../../helper/SvgIcons';
-import {colors, fontSize, fonts, hp, isIos, wp} from '../../helper';
+import {colors, fontSize, fonts, hp, wp} from '../../helper';
 
-const AnimatedFAB = ({onAddPress, onScanPress, isScanPressed}: any) => {
+const AnimatedFAB = ({onAddPress, onScanPress, isScanPressed, isScanFirst, onClosePress}: any) => {
   const [iconName, setIconName] = useState('manage');
   const isOpen = useSharedValue(false);
   const isScanned = useSharedValue(isScanPressed);
@@ -32,6 +32,7 @@ const AnimatedFAB = ({onAddPress, onScanPress, isScanPressed}: any) => {
   const handlePress = () => {
     if (isOpen.value) {
       setIconName('manage');
+      onClosePress && onClosePress();
       width.value = withTiming(hp(16));
       right.value = withTiming(20);
       translateXText.value = withTiming(0);
@@ -52,16 +53,16 @@ const AnimatedFAB = ({onAddPress, onScanPress, isScanPressed}: any) => {
     isScanned.value = !isScanned.value;
   };
 
-  useEffect(() => {
-    if (isScanned.value === true) {
-      if (isIos) {
-        setTimeout(() => {
-          isScanned.value = false;
-        }, 3000);
-      }
-      isScanned.value = false;
-    }
-  }, [isScanPressed]);
+  // useEffect(() => {
+  //   if (isScanned.value === true) {
+  //     if (isIos) {
+  //       setTimeout(() => {
+  //         isScanned.value = false;
+  //       }, 3000);
+  //     }
+  //     isScanned.value = false;
+  //   }
+  // }, [isScanPressed]);
 
   const firstIcon = useAnimatedStyle(() => {
     return {
@@ -101,26 +102,26 @@ const AnimatedFAB = ({onAddPress, onScanPress, isScanPressed}: any) => {
     };
   });
 
-  const containerTranslateX = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateX: isScanned.value ? withTiming(90) : withTiming(0),
-        },
-      ],
-      opacity: isScanned.value ? withTiming(0) : withTiming(1),
-    };
-  });
+  // const containerTranslateX = useAnimatedStyle(() => {
+  //   return {
+  //     transform: [
+  //       {
+  //         translateX: isScanned.value ? withTiming(90) : withTiming(0),
+  //       },
+  //     ],
+  //     opacity: isScanned.value ? withTiming(0) : withTiming(1),
+  //   };
+  // });
 
   return (
-    <Animated.View style={[styles.container, containerTranslateX]}>
+    <Animated.View style={[styles.container]}>
       <Pressable
         onPress={() => {
           handleScanPress();
           onScanPress && onScanPress();
         }}>
-        <Animated.View style={[styles.contentContainer, secondIcon]}>
-          <SvgIcons iconName={'scanFile'} />
+        <Animated.View style={[styles.contentContainer, secondIcon, {backgroundColor: isScanFirst ? colors.green : colors.primary}]}>
+          <SvgIcons iconName={isScanFirst ? 'scanComplete' : 'scanFile'} />
         </Animated.View>
       </Pressable>
 

@@ -2,8 +2,8 @@ import {View} from 'react-native';
 import React, {useState} from 'react';
 import {commonStyles} from '../../helper';
 import {SearchBox} from '../../components';
-import CustomTopTabs from '../../navigation/topBarTabs/CustomTopTabs';
 import { InventoryTopTabs } from '../../navigation/topBarTabs/TopTabsData';
+import CustomScrollableTopTabs from '../../navigation/topBarTabs/CustomScrollableTopTabs';
 
 const InventoryScreen = () => {
   const [searchText, setSearchText] = useState<string>('');
@@ -14,7 +14,7 @@ const InventoryScreen = () => {
         value={searchText}
         onChangeText={text => setSearchText(text)}
       />
-      <CustomTopTabs screens={InventoryTopTabs} />
+      <CustomScrollableTopTabs screens={InventoryTopTabs} />
     </View>
   );
 };

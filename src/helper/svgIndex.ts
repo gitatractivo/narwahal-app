@@ -19,3 +19,7 @@ export { default as Manage } from '../../assets/svg/manage';
 export { default as AddFiles } from '../../assets/svg/addFiles';
 export { default as ScanFile } from '../../assets/svg/scanFile';
 export { default as Close } from '../../assets/svg/close';
+export { default as ScanComplete } from '../../assets/svg/scanComplete';
+export { default as Plus } from '../../assets/svg/plus';
+export { default as ScanQR } from '../../assets/svg/scanQR';
+export { default as BarcodeReader } from '../../assets/svg/barcodeReader';

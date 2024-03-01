@@ -1,97 +1,114 @@
-import React, {useState} from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 
-import {sparePartsList} from '../../helper/dataConstant';
 import BottomSheet from './BottomSheet';
 import CommonButton from './CommonButton';
-import {colors, commonStyles, fontSize, fonts, hp, wp} from '../../helper';
+import SvgIcons from '../../helper/SvgIcons';
+import SecondaryButton from './SecondaryButton';
+import {colors, commonStyles, fontSize, fonts, hp, isIos, wp} from '../../helper';
 
 const AddSparePartsModal = ({
+  partNo,
   isVisible,
   closeFilter,
-  onApplyFilterPress,
+  onAddPartPress,
 }: any) => {
-  const [sparePartsData, setSparePartsData] = useState(sparePartsList);
-
-  const renderSparePartsList = ({item}: any) => {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          let updatedSparePartsList = sparePartsData.map(obj => {
-            if (obj?.id === item?.id) {
-              return {...obj, isSelected: !obj?.isSelected};
-            } else {
-              return obj;
-            }
-          });
-          setSparePartsData(updatedSparePartsList);
-        }}
-        style={[
-          styles.sparePartsListView,
-          {
-            borderColor: item?.isSelected ? colors.primary : colors.grey,
-            backgroundColor: item?.isSelected
-              ? colors.primaryxLight
-              : colors.white,
-          },
-        ]}>
-        <Text style={styles.sparePartsText}>{item?.name}</Text>
-        <Text style={styles.sparePartsText}>{item?.uniqueID}</Text>
-      </TouchableOpacity>
-    );
-  };
-
-  const onClearPress = () => {
-    let updatedSparePartsList = sparePartsData.map(obj => {
-      return {...obj, isSelected: false};
-    });
-    setSparePartsData(updatedSparePartsList);
-  };
+  const [isReconditioned, setIsReconditioned] = useState(false);
+  const [isNew, setIsNew] = useState(false);
+  const [sparePartName, setSparePartName] = useState(partNo);
+  
 
   return (
     <BottomSheet
       handleBar
-      customStyle={{flex: 0.6}}
       isVisible={isVisible}
       closeSheet={closeFilter}
       children={
-        <View style={[styles.container, {flex: 1}]}>
-          <View style={{flex: 1}}>
-            <View style={styles.titleView}>
-              <Text style={styles.titleText}>{`Add spare part`}</Text>
+        <View style={styles.container}>
+            <View style={styles.titleContainer}>
+                <Text style={styles.titleText}>{!partNo?`Add spare part`:'Spare Part'}</Text>
+              {!partNo && <TouchableOpacity 
+                activeOpacity={0.7} 
+                style={styles.scanQrBtn}
+                onPress={()=>{}}
+              >
+                <SvgIcons iconName='scanQR'/>
+                <Text style={styles.scanQrText}>{'Scan QR'}</Text>
+              </TouchableOpacity>}
             </View>
 
-            <View style={styles.subTitleView}>
-              <View style={styles.sectionTitleView}>
-                <Text style={styles.sectionTitle}>{`Material Desc.`}</Text>
+            <View style={styles.sectionTitleView}>
+              <Text style={styles.sectionTitle}>{`Lorem ipsum`}</Text>
+            </View>
+
+            <View style={styles.inputContainer}>
+              <View style={styles.inputView}>
+                <Text style={styles.sparePartsText}>{'Spare Part Name:'}</Text>
+                <View style={styles.textInputView}>
+                  <TextInput
+                    value={sparePartName}
+                    onChangeText={(text)=> setSparePartName(text)}
+                    style={styles.textInputStyle}  
+                    placeholder={'--------------'}
+                    placeholderTextColor={colors.black}
+                  />
+                </View>
               </View>
-
-              <View style={styles.sectionTitleView}>
-                <Text style={styles.sectionTitle}>{`Part No.`}</Text>
+              <View style={styles.inputView}>
+                <Text style={styles.sparePartsText}>{'Tag ID:'}</Text>
+                <View style={styles.textInputView}>
+                  <TextInput
+                    style={styles.textInputStyle}  
+                    placeholder='--------------'
+                    placeholderTextColor={colors.black}
+                  />
+                </View>
+              </View>
+              <View style={styles.inputView}>
+                <Text style={styles.sparePartsText}>{'Quantity:'}</Text>
+                <View style={styles.textInputView}>
+                  <TextInput
+                    style={styles.textInputStyle}  
+                    placeholder='--------------'
+                    placeholderTextColor={colors.black}
+                  />
+                </View>
               </View>
             </View>
 
-            <View style={styles.listContainer}>
-              <FlatList
-                data={sparePartsData}
-                renderItem={renderSparePartsList}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={commonStyles.contentContainerStyle}
-              />
+            <View style={styles.sectionTitleView}>
+              <Text style={styles.sectionTitle}>{`Condition`}</Text>
             </View>
-          </View>
+
+            <View style={styles.inputContainer}>
+              <View style={styles.seconndoryBtnContainer}>
+                <Text style={styles.sparePartsText}>{'Spare Part Conditon:'}</Text>
+                <View style={commonStyles.flexRow}>
+                  <SecondaryButton 
+                    title={'Reconditioned'}
+                    isSelected={isReconditioned} 
+                    onPress={()=>{setIsReconditioned(!isReconditioned); setIsNew(false);}} 
+                  />
+                  <View style={{width: wp(3)}}/>
+                  <SecondaryButton 
+                    title={'New'}
+                    isSelected={isNew} 
+                    onPress={()=>{setIsReconditioned(false); setIsNew(!isNew);}} 
+                  />
+                </View>
+              </View>
+            </View>
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              onPress={onClearPress}
+              onPress={()=>{}}
               style={styles.resetBtnView}>
               <Text style={styles.resetBtnText}>{`Clear`}</Text>
             </TouchableOpacity>
             <CommonButton
               title={'Add Part'}
               onPress={() => {
-                onClearPress();
-                onApplyFilterPress && onApplyFilterPress();
+                onAddPartPress && onAddPartPress();
               }}
               additionalBtnStyle={styles.additionalBtnStyle}
             />
@@ -108,15 +125,6 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
   },
-  titleView: {
-    paddingLeft: wp(6),
-  },
-  subTitleView: {
-    marginBottom: wp(2),
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   titleText: {
     color: colors.black,
     fontSize: fontSize(20),
@@ -124,27 +132,14 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular,
   },
   sectionTitleView: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: wp(0.5),
+    paddingLeft: wp(6),
+    paddingVertical: wp(2),
     backgroundColor: colors.primaryxLight,
   },
   sectionTitle: {
-    paddingLeft: wp(6),
+    color: colors.black,
     fontSize: fontSize(15),
-    paddingVertical: wp(2),
-    color: colors.xxDarkGrey,
     fontFamily: fonts.regular,
-  },
-  secondaryBtnContainer: {
-    paddingLeft: wp(6),
-    flexDirection: 'row',
-    marginBottom: wp(1.5),
-    paddingVertical: hp(2),
-  },
-  listContainer: {
-    marginHorizontal: wp(3),
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -170,17 +165,64 @@ const styles = StyleSheet.create({
     fontFamily: fonts.medium,
   },
   sparePartsText: {
+    flex:1,
     color: colors.black,
     fontSize: fontSize(14),
     fontFamily: fonts.regular,
   },
-  sparePartsListView: {
-    padding: wp(2),
-    marginTop: wp(1),
-    alignItems: 'center',
-    borderWidth: wp(0.2),
-    flexDirection: 'row',
-    borderRadius: wp(1.6),
-    justifyContent: 'space-between',
+  inputContainer: {
+    padding: wp(3),
   },
+  seconndoryBtnContainer:{
+    paddingHorizontal: wp(3),
+    paddingVertical: wp(1),
+    alignItems:'center', 
+    flexDirection:'row', 
+    borderWidth: wp(0.2), 
+    borderRadius: wp(1.6), 
+    marginVertical: hp(0.5),
+    borderColor: colors.grey, 
+    justifyContent:'space-between',
+  },
+  inputView: {
+    padding: wp(3),
+    alignItems:'center', 
+    flexDirection:'row', 
+    borderWidth: wp(0.2), 
+    borderRadius: wp(1.6), 
+    marginVertical: hp(0.5),
+    borderColor: colors.grey, 
+    justifyContent:'space-between', 
+  },
+  textInputView: {
+    flex: 1,
+  },
+  textInputStyle: {
+    maxWidth: wp(35),
+    color: colors.black, 
+    fontSize: fontSize(13), 
+    fontFamily: fonts.regular, 
+    borderBottomWidth: wp(0.1),
+    paddingVertical: isIos ? wp(2) : 0,
+    borderBottomColor: colors.darkGrey,
+  },
+  scanQrText: {
+    color: colors.white, 
+    marginLeft: wp(2.5), 
+    fontSize: fontSize(12), 
+    fontFamily: fonts.medium
+  },
+  scanQrBtn: {
+    padding: wp(3),
+    alignItems:'center',
+    flexDirection:'row',
+    borderRadius: wp(100),
+    backgroundColor: colors.primary, 
+  },
+  titleContainer: {
+    alignItems:'center',
+    flexDirection: 'row',
+    paddingHorizontal: wp(6),
+    justifyContent:'space-between', 
+  }
 });

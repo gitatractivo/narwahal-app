@@ -417,6 +417,7 @@ export const checkInDetailList = [
 export const inventoryDetailList = [
   {
     id: 1,
+    tag: 'New',
     title: 'CCU MULTI PURPOSE CONTROLLER, MPC-10',
     desc: 'Machinery • Manufacturer',
     uniqueID: '4765-1901-0004',
@@ -425,6 +426,7 @@ export const inventoryDetailList = [
   },
   {
     id: 2,
+    tag: 'Reconditioned',
     title: 'CCU MULTI PURPOSE CONTROLLER, MPC-10',
     desc: 'Machinery • Manufacturer',
     uniqueID: '4765-1901-0004',
@@ -433,6 +435,7 @@ export const inventoryDetailList = [
   },
   {
     id: 3,
+    tag: 'Reconditioned',
     title: 'CCU MULTI PURPOSE CONTROLLER, MPC-10',
     desc: 'by Hyundai',
     uniqueID: '4765-1901-0004',
@@ -441,6 +444,7 @@ export const inventoryDetailList = [
   },
   {
     id: 4,
+    tag: 'New',
     title: 'CCU MULTI PURPOSE CONTROLLER, MPC-10',
     desc: 'by Hyundai',
     uniqueID: '4765-1901-0004',
@@ -449,6 +453,7 @@ export const inventoryDetailList = [
   },
   {
     id: 5,
+    tag: 'New',
     title: 'CCU MULTI PURPOSE CONTROLLER, MPC-10',
     desc: 'Machinery • Manufacturer',
     uniqueID: '4765-1901-0004',
@@ -457,6 +462,7 @@ export const inventoryDetailList = [
   },
   {
     id: 6,
+    tag: 'Reconditioned',
     title: 'CCU MULTI PURPOSE CONTROLLER, MPC-10',
     desc: 'Machinery • Manufacturer',
     uniqueID: '4765-1901-0004',
@@ -465,6 +471,7 @@ export const inventoryDetailList = [
   },
   {
     id: 7,
+    tag: 'New',
     title: 'CCU MULTI PURPOSE CONTROLLER, MPC-10',
     desc: 'Machinery • Manufacturer',
     uniqueID: '4765-1901-0004',
@@ -473,6 +480,7 @@ export const inventoryDetailList = [
   },
   {
     id: 8,
+    tag: 'New',
     title: 'CCU MULTI PURPOSE CONTROLLER, MPC-10',
     desc: 'Machinery • Manufacturer',
     uniqueID: '4765-1901-0004',
@@ -874,3 +882,51 @@ export const sparePartsList = [
     isSelected: false,
   },
 ];
+
+export const inventorySubList = [
+  {
+    id: 1,
+    title: 'Main Engine (Hyundai Heavy Industry)',
+    floor: 2,
+    room: 'Inventory room',
+    rack: 2
+  },
+  {
+    id: 2,
+    title: 'Main Engine (Hyundai Heavy Industry)',
+    floor: 3,
+    room: 'Deck Room',
+    rack: 4
+  },
+  {
+    id: 3,
+    title: 'Main Engine (Hyundai Heavy Industry)',
+    floor: 2,
+    room: 'Inventory room',
+    rack: 2
+  },
+];
+
+export const subListItem = [
+  {
+    id: 1,
+    srNo: 1,
+    rob: '44',
+    scannedQty: '22',
+    tag: 'New',
+  },
+  {
+    id: 2,
+    srNo: 2,
+    rob: '44',
+    scannedQty: '19',
+    tag: 'Missing',
+  },
+  {
+    id: 3,
+    srNo: 3,
+    rob: '44',
+    scannedQty: '02',
+    tag: 'New',
+  },
+]

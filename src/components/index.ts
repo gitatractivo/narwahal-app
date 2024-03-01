@@ -17,7 +17,9 @@ import CheckInDockListItem from './common/CheckInDockListItem';
 import InventoryFilterModal from './common/InventoryFilterModal';
 import CheckInSpareListItem from './common/CheckInSpareListItem';
 import InventoryAddListItem from './common/InventoryAddListItem';
+import InventorySubListItem from './common/InventorySubListItem';
 import CheckInDetailListItem from './common/CheckInDetailListItem';
+import InventoryTrackingPopup from './common/InventoryTrackingPopup';
 import CheckInNewSpareListItem from './common/CheckInNewSpareListItem';
 import InventorySecondListItem from './common/InventorySecondListItem';
 import InventoryDetailListItem from './common/InventoryDetailListItem';
@@ -42,7 +44,9 @@ export {
   InventoryFilterModal,
   InventoryAddListItem,
   CheckInSpareListItem,
+  InventorySubListItem,
   CheckInDetailListItem,
+  InventoryTrackingPopup,
   InventoryDetailListItem,
   CheckInNewSpareListItem,
   InventorySecondListItem,

@@ -3,8 +3,51 @@ import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import SvgIcons from '../../helper/SvgIcons';
 import {inventorySecondFloorList} from '../../helper/dataConstant';
-import {colors, commonStyles, fontSize, fonts, hp, wp} from '../../helper';
+import {ListFooterComponent, colors, commonStyles, fontSize, fonts, hp, wp} from '../../helper';
 import {InventoryFilterModal, InventorySecondListItem} from '../../components';
+
+export function AllInventoryScreen({navigation}: any) {
+  const [filterModal, setFilterModal] = useState<boolean>(false);
+  const renderInventorySecondFloorList = ({item}: any) => {
+    return (
+      <InventorySecondListItem
+        item={item}
+        onPress={() =>
+          navigation.navigate('InventorySubListScreen', {
+            title: item?.title,
+          })
+        }
+      />
+    );
+  };
+
+  return (
+    <View style={commonStyles.root}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => setFilterModal(true)}
+        style={styles.statusBarView}>
+        <Text style={styles.stausText}>{`Inventory type`}</Text>
+        <SvgIcons iconName="chevronRight" />
+      </TouchableOpacity>
+
+      <FlatList
+        bounces={false}
+        data={inventorySecondFloorList}
+        renderItem={renderInventorySecondFloorList}
+        keyExtractor={item => item?.id?.toString()}
+        ListFooterComponent={ListFooterComponent}
+      />
+
+      <InventoryFilterModal
+        isVisible={filterModal}
+        closeFilter={() => setFilterModal(false)}
+        onApplyFilterPress={() => setFilterModal(false)}
+        onResetPress={() => setFilterModal(false)}
+      />
+    </View>
+  );
+}
 
 export function SecondFloor({navigation}: any) {
   const [filterModal, setFilterModal] = useState<boolean>(false);
@@ -36,7 +79,7 @@ export function SecondFloor({navigation}: any) {
         data={inventorySecondFloorList}
         renderItem={renderInventorySecondFloorList}
         keyExtractor={item => item?.id?.toString()}
-        contentContainerStyle={commonStyles.contentContainerStyle}
+        ListFooterComponent={ListFooterComponent}
       />
 
       <InventoryFilterModal
@@ -79,7 +122,7 @@ export function ThirdFloor({navigation}: any) {
         data={inventorySecondFloorList}
         renderItem={renderInventorySecondFloorList}
         keyExtractor={item => item?.id?.toString()}
-        contentContainerStyle={commonStyles.contentContainerStyle}
+        ListFooterComponent={ListFooterComponent}
       />
 
       <InventoryFilterModal
@@ -122,7 +165,7 @@ export function BosunStore({navigation}: any) {
         data={inventorySecondFloorList}
         renderItem={renderInventorySecondFloorList}
         keyExtractor={item => item?.id?.toString()}
-        contentContainerStyle={commonStyles.contentContainerStyle}
+        ListFooterComponent={ListFooterComponent}
       />
 
       <InventoryFilterModal

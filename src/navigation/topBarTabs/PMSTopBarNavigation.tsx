@@ -10,6 +10,7 @@ import {
 import {FilterBar, ListItem} from '../../components';
 import {
   BASE_URL,
+  ListFooterComponent,
   colors,
   commonStyles,
   fontSize,
@@ -93,7 +94,7 @@ export function Sailing({navigation}: any) {
           data={sailingData}
           renderItem={renderSailingList}
           keyExtractor={item => item?.id?.toString()}
-          contentContainerStyle={commonStyles.contentContainerStyle}
+          ListFooterComponent={ListFooterComponent}
           refreshing={refreshing}
           onRefresh={handleRefresh}
         />
@@ -125,7 +126,7 @@ export function Port({navigation}: any) {
         data={sailingData}
         renderItem={renderSailingList}
         keyExtractor={item => item?.id?.toString()}
-        contentContainerStyle={commonStyles.contentContainerStyle}
+        ListFooterComponent={ListFooterComponent}
       />
     </View>
   );
@@ -153,7 +154,7 @@ export function Dock({navigation}: any) {
         data={sailingData}
         renderItem={renderSailingList}
         keyExtractor={item => item?.id?.toString()}
-        contentContainerStyle={commonStyles.contentContainerStyle}
+        ListFooterComponent={ListFooterComponent}
       />
     </View>
   );

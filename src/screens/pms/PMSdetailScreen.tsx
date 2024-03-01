@@ -20,7 +20,7 @@ import {
   DetailListItem,
 } from '../../components';
 import SvgIcons from '../../helper/SvgIcons';
-import {commonStyles, BASE_URL} from '../../helper';
+import {commonStyles, BASE_URL, ListFooterComponent} from '../../helper';
 import {DetailDataProps, PMSdetailScreenProps} from '../../interface/common';
 import {hp, wp, fonts, isIos, colors, fontSize} from '../../helper';
 import axios from 'axios';
@@ -106,7 +106,7 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
           data={detailData}
           renderItem={renderDetail}
           keyExtractor={(item, index) => index.toString()}
-          contentContainerStyle={commonStyles.contentContainerStyle}
+          ListFooterComponent={ListFooterComponent}
           refreshing={refreshing}
           onRefresh={handleRefresh}
         />

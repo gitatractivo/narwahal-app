@@ -21,6 +21,7 @@ import {
 } from '../../components';
 import {
   BASE_URL,
+  ListFooterComponent,
   colors,
   commonStyles,
   fontSize,
@@ -172,7 +173,7 @@ export function Spares({navigation}: any) {
           data={products}
           renderItem={renderCheckInSpareList}
           keyExtractor={(item, index) => index.toString()}
-          contentContainerStyle={commonStyles.contentContainerStyle}
+          ListFooterComponent={ListFooterComponent}
         />
       )}
 
@@ -239,7 +240,7 @@ export function NewSpares({navigation}: any) {
         data={checkInNewSpareList}
         renderItem={renderCheckInNewSpareList}
         keyExtractor={item => item?.id?.toString()}
-        contentContainerStyle={commonStyles.contentContainerStyle}
+        ListFooterComponent={ListFooterComponent}
       />
     </View>
   );
@@ -266,7 +267,7 @@ export function DryDock({navigation}: any) {
         data={checkInDockList}
         renderItem={renderCheckInDockList}
         keyExtractor={item => item?.id?.toString()}
-        contentContainerStyle={commonStyles.contentContainerStyle}
+        ListFooterComponent={ListFooterComponent}
       />
     </View>
   );

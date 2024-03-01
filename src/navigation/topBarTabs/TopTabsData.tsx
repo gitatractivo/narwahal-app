@@ -2,12 +2,14 @@ import {Dock, Port, Sailing} from './PMSTopBarNavigation';
 import {DryDock, NewSpares, Spares} from './CheckInTopBarNavigation';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import CheckInDetailScreen from '../../screens/checkIn/CheckInDetailScreen';
-import {BosunStore, SecondFloor, ThirdFloor} from './InventoryTopBarNavigation';
+import {AllInventoryScreen, BosunStore, SecondFloor, ThirdFloor} from './InventoryTopBarNavigation';
 import InventoryDetailScreen from '../../screens/inventory/InventoryDetailScreen';
+import InventorySubListScreen from '../../screens/inventory/InventorySubListScreen';
 
 const CheckInNewSpareStack = createNativeStackNavigator();
 const CheckInDryDockStack = createNativeStackNavigator();
 
+const InventoryStack = createNativeStackNavigator();
 const Inventory2Stack = createNativeStackNavigator();
 const Inventory3Stack = createNativeStackNavigator();
 const InventoryBosunStack = createNativeStackNavigator();
@@ -33,6 +35,22 @@ function CheckInDryDockStackScreen() {
         component={CheckInDetailScreen}
       />
     </CheckInDryDockStack.Navigator>
+  );
+}
+
+function InventoryStackScreen() {
+  return (
+    <InventoryStack.Navigator screenOptions={{headerShown: false}}>
+      <InventoryStack.Screen name="AllInventoryScreen" component={AllInventoryScreen} />
+      <InventoryStack.Screen
+        name="InventorySubListScreen"
+        component={InventorySubListScreen}
+      />
+      <InventoryStack.Screen
+        name="InventoryDetailScreen"
+        component={InventoryDetailScreen}
+      />
+    </InventoryStack.Navigator>
   );
 }
 
@@ -117,20 +135,26 @@ export const CheckInTopTabs = [
 export const InventoryTopTabs = [
   {
     id: 1,
+    name: 'AllInventoryScreen',
+    tabBarLabel: 'All',
+    component: InventoryStackScreen,
+  },
+  {
+    id: 2,
     name: 'SecondFloor',
     tabBarLabel: '2nd Floor',
     component: Inventory2StackScreen,
   },
   {
-    id: 2,
+    id: 3,
     name: 'ThirdFloor',
     tabBarLabel: '3rd Floor',
     component: Inventory3StackScreen,
   },
   {
-    id: 3,
+    id: 4,
     name: 'BosunStore',
-    tabBarLabel: 'Bosun Store',
+    tabBarLabel: 'Deck floor',
     component: InventoryBosunStackScreen,
   },
 ];

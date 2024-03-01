@@ -1,6 +1,6 @@
 import { ActivityIndicator, Text,Alert, FlatList, StatusBar, StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { BASE_URL, colors, commonStyles, fontSize, fonts, hp, isIos, wp } from '../../helper';
+import { BASE_URL, ListFooterComponent, colors, commonStyles, fontSize, fonts, hp, isIos, wp } from '../../helper';
 import { BottomSheet, CheckOutListItem, CommonButton, FAB, SearchBox } from '../../components';
 import { checkOutList } from '../../helper/dataConstant';
 
@@ -154,7 +154,7 @@ const CheckOutScreen = ({ navigation }: any) => {
           data={products}
         renderItem={renderCheckOutList}
           keyExtractor={(item, index) => index.toString()}
-        contentContainerStyle={commonStyles.contentContainerStyle}
+          ListFooterComponent={ListFooterComponent}
       />}
 
       <FAB status={'Confirm'} onPress={() => { }} />

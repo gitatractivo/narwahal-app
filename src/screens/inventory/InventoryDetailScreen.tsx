@@ -5,71 +5,63 @@ import SvgIcons from '../../helper/SvgIcons';
 import {
   inventoryAddList,
   inventoryDetailList,
-  inventoryScanList,
 } from '../../helper/dataConstant';
 import {
   AddSparePartsModal,
   AnimatedFAB,
-  BottomSheet,
   FAB,
   InventoryAddListItem,
   InventoryDetailListItem,
+  InventoryTrackingPopup,
 } from '../../components';
-import {colors, commonStyles, fontSize, fonts, wp} from '../../helper';
+import {ListFooterComponent, colors, commonStyles, fontSize, fonts,  wp} from '../../helper';
 
 const InventoryDetailScreen = ({route}: any) => {
   const title = route?.params?.title;
 
   const [isScanning, setIsScanning] = useState(false);
+  const [isScanFirst, setIsScanFirst] = useState(false);
   const [isAddListVisible, setIsAddListVisible] = useState(false);
-  const [isScanListVisible, setIsScanListVisible] = useState(false);
   const [isAddPartsModal, setIsAddPartsModal] = useState(false);
+  const [isTrackingPopup, setIsTrackingPopup] = useState(false);
+  const [partNo, setPartNo] = useState('');
 
   const onScanPress = useCallback(() => {
     setIsScanning(true);
-    setIsScanListVisible(true);
     setIsAddListVisible(false);
     setTimeout(() => {
       setIsScanning(false);
     }, 3000);
+    setIsScanFirst(true);
   }, [isScanning]);
 
   const onAddPress = useCallback(() => {
     setIsAddListVisible(true);
-    setIsScanListVisible(false);
   }, []);
 
-  const renderScanList = ({item}: any) => {
-    return (
-      <InventoryDetailListItem isTagVisible item={item} onPress={() => {}} />
-    );
-  };
   const renderAddList = ({item}: any) => {
     return (
       <InventoryAddListItem
         item={item}
-        onPress={() => setIsAddPartsModal(true)}
+        onPress={() => {
+          setPartNo(item?.uniqueID); 
+          setTimeout(() => {
+            setIsAddPartsModal(true); 
+          }, 500);
+        }}
       />
     );
   };
   const renderDetail = ({item}: any) => {
-    return <InventoryDetailListItem item={item} onPress={() => {}} />;
+    return <InventoryDetailListItem 
+            item={item} 
+            onPress={() => {}} 
+            onSubListPress={() => {setIsTrackingPopup(true)}}
+          />;
   };
 
   return (
     <View style={commonStyles.root}>
-      {isScanning ? (
-        <View style={[styles.scanningFileContainer, {flex: 1000}]}>
-          <SvgIcons iconName={'scanningFiles'} />
-          <Text style={styles.scanningText}>{'Scanning...'}</Text>
-          <Text style={styles.scanningDescText}>
-            {
-              'Lorem ipsum is the placeholder text he\nplaceholder text older text.'
-            }
-          </Text>
-        </View>
-      ) : (
-        <>
           <View style={styles.titleView}>
             <Text numberOfLines={1} style={styles.titleText}>
               {title}
@@ -79,21 +71,19 @@ const InventoryDetailScreen = ({route}: any) => {
             </Text>
           </View>
 
-          {isScanListVisible ? (
-            <FlatList
-              bounces={false}
-              data={inventoryScanList}
-              renderItem={renderScanList}
-              keyExtractor={item => item?.id?.toString()}
-              contentContainerStyle={commonStyles.contentContainerStyle}
-            />
-          ) : isAddListVisible ? (
+          {isScanning && 
+            <View style={styles.triggerView}>
+              <SvgIcons iconName='barcodeReader'/>
+              <Text style={styles.triggerText}>{'Press the trigger to start scanning!'}</Text>
+            </View>}
+
+          {isAddListVisible ? (
             <FlatList
               bounces={false}
               data={inventoryAddList}
               renderItem={renderAddList}
               keyExtractor={item => item?.id?.toString()}
-              contentContainerStyle={commonStyles.contentContainerStyle}
+              ListFooterComponent={ListFooterComponent}
             />
           ) : (
             <FlatList
@@ -101,32 +91,41 @@ const InventoryDetailScreen = ({route}: any) => {
               data={inventoryDetailList}
               renderItem={renderDetail}
               keyExtractor={item => item?.id?.toString()}
-              contentContainerStyle={commonStyles.contentContainerStyle}
+              ListFooterComponent={ListFooterComponent}
             />
           )}
-        </>
-      )}
 
       {isAddListVisible ? (
         <FAB
-          status={'Save'}
+          status={'Add'}
+          iconName={'plus'}
           onPress={() => {
-            setIsAddListVisible(false);
-            setIsScanListVisible(false);
+            setIsAddPartsModal(true);
+            // setIsAddListVisible(false);
+            // setIsScanListVisible(false);
           }}
         />
       ) : (
         <AnimatedFAB
           onAddPress={onAddPress}
           onScanPress={onScanPress}
+          isScanFirst={isScanFirst}
           isScanPressed={isScanning}
+          onClosePress={() => setIsScanFirst(false)}
         />
       )}
 
       <AddSparePartsModal
+        partNo={partNo}
         isVisible={isAddPartsModal}
-        closeFilter={() => setIsAddPartsModal(false)}
-        onApplyFilterPress={() => setIsAddPartsModal(false)}
+        closeFilter={() => {setIsAddPartsModal(false); setPartNo('')}}
+        onAddPartPress={() => {setIsAddPartsModal(false); setIsAddListVisible(false); setPartNo('') }}
+      />
+
+      <InventoryTrackingPopup
+        isVisible={isTrackingPopup}
+        closeSheet={() => setIsTrackingPopup(false)}
+        onSavePress={() => {}}
       />
     </View>
   );
@@ -168,5 +167,22 @@ const styles = StyleSheet.create({
     fontSize: fontSize(15),
     color: colors.greyText,
     fontFamily: fonts.regular,
+  },
+  triggerView: {
+    margin: wp(1), 
+    borderWidth: wp(0.2),
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: wp(1.6),
+    justifyContent: 'center',
+    paddingVertical: wp(1.5),
+    borderColor: colors.primary,
+    backgroundColor: colors.primaryMedium,
+  },
+  triggerText: {
+    marginLeft: wp(3),
+    color: colors.primary,
+    fontSize: fontSize(14),
+    fontFamily: fonts.medium,
   },
 });
