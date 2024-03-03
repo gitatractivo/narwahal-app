@@ -51,7 +51,8 @@ function Spares({ navigation }: any) {
 
   useEffect(() => {
 
-    TagReadModule.startInventoryTask()
+    TagReadModule.startInventoryTask();
+    console.log('startInventoryTask')
     const sub = DeviceEventEmitter.addListener('ReadTag', (event) => {
       let tag = event.match(/[0-9A-F]{24}/i)[0];
 
@@ -59,22 +60,22 @@ function Spares({ navigation }: any) {
       const arr = tags
       if (!arr.includes(tag)) {
         arr.push(tag)
-        setTags(prev => [...prev,tag])
+        setTags(prev => [...prev,tag]);
       }
     });
 
     return () => {
-      console.log("cleanup")
+      console.log("cleanup");
       TagReadModule.stopInventoryTask();
-      sub.remove()
-    }
+      sub.remove();
+    };
   }, []);
 
   useEffect(() => {
-    console.log('tadgs', tags)
+    console.log('tadgs', tags);
     if (tags.length > 0) {
       // removeDuplicates();
-      setIsLoading(true)
+      setIsLoading(true);
       getTags();
     }
   }, [tags])

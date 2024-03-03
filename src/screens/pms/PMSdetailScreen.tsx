@@ -36,6 +36,7 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [detailData, setdetailData] = useState<DetailDataProps[]>();
+  const [tagToTrack, setTagToTrack] = useState('');
 
 
   const getData = async () => {
@@ -80,7 +81,12 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
   }
 
   const renderDetail = ({item}: any) => {
-    return <DetailListItem item={item} onPress={() => setEditModal(true)} />;
+    return <DetailListItem item={item} onPress={() => {
+      setEditModal(true);
+      console.log(item);
+      setTagToTrack(item.rfid);
+      console.log('Set tag to track: ', item.rfid);
+    }} />;
   };
 
   return (
@@ -117,7 +123,7 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
         isVisible={editModal}
         closeSheet={() => setEditModal(false)}
       >
-        <PMSDetailBottomSheetView />
+        <PMSDetailBottomSheetView setEditModal={setEditModal} tagToTrack={tagToTrack} />
       </BottomSheet>
 
       <SafeAreaView />

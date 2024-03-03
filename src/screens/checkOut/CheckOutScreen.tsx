@@ -25,52 +25,33 @@ const CheckOutScreen = ({ navigation }: any) => {
   const [searchText, setSearchText] = useState<string>("")
 
   useEffect(() => {
-   
-    TagReadModule.startInventoryTask()
+    TagReadModule.startInventoryTask();
     const sub = DeviceEventEmitter.addListener('ReadTag', (event) => {
+      console.log('event', event);
       let tag = event.match(/[0-9A-F]{24}/i)[0];
 
       // console.log('Read Tag: ', tag);
-      if(!tags.includes(tag)){
-        const arr = tags
-        arr.push(tag)
-        setTags(arr)
+      if (!tags.includes(tag)) {
+        const arr = tags;
+        arr.push(tag);
+        setTags(arr);
       }
     });
 
     return () => {
       TagReadModule.stopInventoryTask();
-      sub.remove()  
-    }
-  }, []);
-  useEffect(() => {
-
-    TagReadModule.startInventoryTask()
-    const sub = DeviceEventEmitter.addListener('ReadTag', (event) => {
-      let tag = event.match(/[0-9A-F]{24}/i)[0];
-
-      // console.log('Read Tag: ', tag);
-      const arr = tags
-      if (!arr.includes(tag)) {
-        arr.push(tag)
-        setTags(prev => [...prev,tag])
-      }
-    });
-
-    return () => {
-      TagReadModule.stopInventoryTask();
-      sub.remove()
-    }
+      sub.remove();
+    };
   }, []);
 
   useEffect(() => {
-    console.log('tadgs', tags)
+    console.log('tadgs', tags);
     if (tags.length > 0) {
       // removeDuplicates();
-      setIsLoading(true)
+      setIsLoading(true);
       getTags();
     }
-  }, [tags])
+  }, [tags]);
 
   const handleSave = async () => {
     console.log({
@@ -102,8 +83,8 @@ const CheckOutScreen = ({ navigation }: any) => {
           headers: {
             'Content-Type': 'application/json',
             'accept': 'application/json'
-          }
-        })
+          },
+        });
 
       const pro = products.data.map((product: any, index:number) => {
         return {
