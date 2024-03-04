@@ -26,6 +26,7 @@ class LocateModule(reactContext: ReactApplicationContext) : ReactContextBaseJava
     @SuppressLint("HandlerLeak")
     private val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
+            Log.d(tag, msg.toString())
             triggerChecker(msg, reactContext)
             if (!triggerHeld) return
             if (msg.what != SDConsts.Msg.RFMsg) return;

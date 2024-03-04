@@ -9,13 +9,10 @@ import { DeviceEventEmitter } from 'react-native';
 
 const { LocateModule } = NativeModules;
 
-const PMSDetailBottomSheetView = ({setEditModal}) => {
+const PMSDetailBottomSheetView = ({setEditModal, tagToTrack}) => {
 
-    const [tagToLocate, setTagToLocate] = useState('E2801191A5020060349CB11A');
     const [strength, setStrength] = useState(0);
     const [triggerPressed, setTriggerPressed] = useState(false);
-
-    const strengthLocal = 0;
 
     useEffect(() => {
         const listener1 = DeviceEventEmitter.addListener('TriggerPress', () => {
@@ -38,11 +35,12 @@ const PMSDetailBottomSheetView = ({setEditModal}) => {
 
     useEffect(() => {
         console.log("Starting locate");
-        LocateModule.startLocatingTask(tagToLocate);
+        console.log("Tag to track: ", tagToTrack);
+        LocateModule.startLocatingTask(tagToTrack);
         return () => {
             LocateModule.stopLocatingTask();
         };
-    }, [tagToLocate]);
+    }, [tagToTrack]);
 
 
     return <>
@@ -96,8 +94,8 @@ const PMSDetailBottomSheetView = ({setEditModal}) => {
                 onPress={() => setEditModal(false)}
             />
         </View>
-    </>
-}
+    </>;
+};
 
 export default PMSDetailBottomSheetView;
 

@@ -59,7 +59,7 @@ export function Spares({navigation}: any) {
   const [quantity, setQuantity] = useState<number>(0);
   const [status, setStatus] = useState<string>('planning');
 
-  // useEffect(() => {
+  useEffect(() => {
   //   TagReadModule.startInventoryTask();
   //   const sub = DeviceEventEmitter.addListener('ReadTag', event => {
   //     let tag = event.match(/[0-9A-F]{24}/i)[0];
@@ -72,21 +72,34 @@ export function Spares({navigation}: any) {
   //     }
   //   });
 
-  //   return () => {
-  //     console.log('cleanup');
-  //     TagReadModule.stopInventoryTask();
-  //     sub.remove();
-  //   };
-  // }, []);
+    TagReadModule.startInventoryTask();
+    console.log('startInventoryTask')
+    const sub = DeviceEventEmitter.addListener('ReadTag', (event) => {
+      let tag = event.match(/[0-9A-F]{24}/i)[0];
 
-  // useEffect(() => {
-  //   console.log('tadgs', tags);
-  //   if (tags.length > 0) {
-  //     // removeDuplicates();
-  //     setIsLoading(true);
-  //     getTags();
-  //   }
-  // }, [tags]);
+      // console.log('Read Tag: ', tag);
+      const arr = tags
+      if (!arr.includes(tag)) {
+        arr.push(tag)
+        setTags(prev => [...prev,tag]);
+      }
+    });
+
+    return () => {
+      console.log("cleanup");
+      TagReadModule.stopInventoryTask();
+      sub.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log('tadgs', tags);
+    if (tags.length > 0) {
+      // removeDuplicates();
+      setIsLoading(true);
+      // getTags();
+    }
+  }, [tags])
 
   const handleSave = async () => {
     try {
