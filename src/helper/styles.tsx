@@ -7,7 +7,11 @@ export const commonStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
-  contentContainerStyle: {
-    paddingBottom: hp(10),
+  flex: {
+    flex: 1,
   },
+  flexRow: {
+    flexDirection:'row', 
+    alignItems:'center',
+  }
 });

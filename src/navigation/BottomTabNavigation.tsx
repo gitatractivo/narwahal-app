@@ -1,28 +1,31 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+import {colors, hp, wp} from '../helper';
 import {BottomTabItem} from '../components';
 import PMSscreen from '../screens/pms/PMSscreen';
 import CheckInScreen from '../screens/checkIn/CheckInScreen';
 import PMSdetailScreen from '../screens/pms/PMSdetailScreen';
 import CheckOutScreen from '../screens/checkOut/CheckOutScreen';
-import {colors, fontSize, fonts, hp, isIos, wp} from '../helper';
+import ConnectScreen from '../screens/connect/ConnectScreen.tsx';
 import InventoryScreen from '../screens/inventory/InventoryScreen';
-import ConnectScreen from "../screens/connect/ConnectScreen.tsx";
+import CheckInDetailScreen from '../screens/checkIn/CheckInDetailScreen.tsx';
 
 export type BottomStackParamList = {
   PMSscreen: undefined;
   CheckInScreen: undefined;
   CheckOutScreen: undefined;
   InventoryScreen: undefined;
-  PMSdetailScreen: { id: string; description: string, status: string, } | undefined;
-    ConnectScreen: undefined;
+  PMSdetailScreen:
+    | {id: string; description: string; status: string}
+    | undefined;
+  ConnectScreen: undefined;
 };
 
 const PMSstack = createNativeStackNavigator();
+const CheckInStack = createNativeStackNavigator();
 
 function PMSstackScreen() {
   return (
@@ -38,6 +41,23 @@ function PMSstackScreen() {
         component={PMSdetailScreen}
       />
     </PMSstack.Navigator>
+  );
+}
+
+function CheckInStackScreen() {
+  return (
+    <CheckInStack.Navigator screenOptions={{headerShown: false}}>
+      <CheckInStack.Screen
+        name="CheckInScreen"
+        //@ts-ignore
+        component={CheckInScreen}
+      />
+      <CheckInStack.Screen
+        name="CheckInDetailScreen"
+        //@ts-ignore
+        component={CheckInDetailScreen}
+      />
+    </CheckInStack.Navigator>
   );
 }
 
@@ -81,7 +101,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="CheckInScreen"
-        component={CheckInScreen}
+        component={CheckInStackScreen}
         options={{
           tabBarActiveTintColor: 'black',
           tabBarIcon: ({focused}) => (
@@ -121,25 +141,8 @@ const BottomTabNavigator = () => {
           ),
         }}
       />
-        
     </Tab.Navigator>
   );
 };
 
 export default BottomTabNavigator;
-
-export const styles = StyleSheet.create({
-  iconContainer: {
-    width: wp(17),
-    height: wp(8.5),
-    alignItems: 'center',
-    borderRadius: wp(100),
-    justifyContent: 'center',
-    marginTop: isIos ? hp(0) : 0,
-  },
-  tabText: {
-    marginTop: wp(0.5),
-    fontSize: fontSize(13),
-    fontFamily: fonts.regular,
-  },
-});

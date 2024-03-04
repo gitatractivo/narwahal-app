@@ -4,11 +4,11 @@ import {View, StyleSheet} from 'react-native';
 import {commonStyles} from '../../helper';
 import {SearchBox} from '../../components';
 import {PMSscreenProps} from '../../interface/common';
-import PMSTopBarNavigation from '../../navigation/topBarTabs/PMSTopBarNavigation';
+import {PMStopTabs} from '../../navigation/topBarTabs/TopTabsData';
+import CustomTopTabs from '../../navigation/topBarTabs/CustomTopTabs';
 
 const PMSscreen: FC<PMSscreenProps> = ({navigation}) => {
   const [searchText, setSearchText] = useState<string>('');
-  
 
   return (
     <View style={commonStyles.root}>
@@ -16,7 +16,7 @@ const PMSscreen: FC<PMSscreenProps> = ({navigation}) => {
         value={searchText}
         onChangeText={text => setSearchText(text)}
       />
-      <PMSTopBarNavigation />
+      <CustomTopTabs screens={PMStopTabs} />
     </View>
   );
 };
