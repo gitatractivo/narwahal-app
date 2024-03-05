@@ -1,7 +1,7 @@
 import { ActivityIndicator, Text,Alert, FlatList, StatusBar, StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { BASE_URL, ListFooterComponent, colors, commonStyles, fontSize, fonts, hp, isIos, wp } from '../../helper';
-import { BottomSheet, CheckOutListItem, CommonButton, FAB, SearchBox } from '../../components';
+import { BottomSheet, CheckOutListItem, CommonButton, FAB, SearchBox, SuccessPopup, TrackingPopup } from '../../components';
 import { checkOutList } from '../../helper/dataConstant';
 
 import { NativeModules } from 'react-native';
@@ -18,58 +18,61 @@ const CheckOutScreen = ({ navigation }: any) => {
   const [tags, setTags] = useState<string[]>([])
   const [products, setProducts] = useState<RfidProductProp[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [successPopup, setSuccessPopup] = useState(false)
   const [selectProduct, setSelectProduct] = useState<RfidProductProp | null>()
   const [quantity, setQuantity] = useState<number>(0)
   const [searchText, setSearchText] = useState<string>("")
 
-  useEffect(() => {
-    TagReadModule.startInventoryTask();
-    const sub = DeviceEventEmitter.addListener('ReadTag', (event) => {
-      console.log('event', event);
-      let tag = event.match(/[0-9A-F]{24}/i)[0];
+  // useEffect(() => {
+  //   TagReadModule.startInventoryTask();
+  //   const sub = DeviceEventEmitter.addListener('ReadTag', (event) => {
+  //     console.log('event', event);
+  //     let tag = event.match(/[0-9A-F]{24}/i)[0];
 
-      // console.log('Read Tag: ', tag);
-      if (!tags.includes(tag)) {
-        const arr = tags;
-        arr.push(tag);
-        setTags(arr);
-      }
-    });
+  //     // console.log('Read Tag: ', tag);
+  //     if (!tags.includes(tag)) {
+  //       const arr = tags;
+  //       arr.push(tag);
+  //       setTags(arr);
+  //     }
+  //   });
 
-    return () => {
-      TagReadModule.stopInventoryTask();
-      sub.remove();
-    };
-  }, []);
+  //   return () => {
+  //     TagReadModule.stopInventoryTask();
+  //     sub.remove();
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    console.log('tadgs', tags);
-    if (tags.length > 0) {
-      // removeDuplicates();
-      setIsLoading(true);
-      getTags();
-    }
-  }, [tags]);
+  // useEffect(() => {
+  //   console.log('tadgs', tags);
+  //   if (tags.length > 0) {
+  //     // removeDuplicates();
+  //     setIsLoading(true);
+  //     getTags();
+  //   }
+  // }, [tags]);
 
   const handleSave = async () => {
-    console.log({
-      "product_id": selectProduct?.product.id,
-      "quantity": quantity
-    })
+    // console.log({
+    //   "product_id": selectProduct?.product?.id,
+    //   "quantity": quantity
+    // })
     try {
-      const resp = await axios.post(`${BASE_URL}/pms/scan_products?scan_type=checkout`, [
-        {
-          "product_id": selectProduct?.product.id,
-          "quantity": quantity
-        }
-      ])
+      // const resp = await axios.post(`${BASE_URL}/pms/scan_products?scan_type=checkout`, [
+      //   {
+      //     "product_id": selectProduct?.product?.id,
+      //     "quantity": quantity
+      //   }
+      // ])
       setEditModal(false)
-      setSelectProduct(null)
-      setQuantity(0)
+      // setSelectProduct(null)
+      // setQuantity(0)
+      setTimeout(() => {
+        setSuccessPopup(true)
+      }, 500);
     } catch (error) {
       console.log(error)
       setEditModal(false)
-
     }
   }
 
@@ -131,15 +134,28 @@ const CheckOutScreen = ({ navigation }: any) => {
           <Text>Loading...</Text>
         </View>
       ) : <FlatList
-        bounces={false}
-          data={products}
-        renderItem={renderCheckOutList}
+          bounces={false}
+          data={checkOutList}
+          // data={products}
+          renderItem={renderCheckOutList}
           keyExtractor={(item, index) => index.toString()}
           ListFooterComponent={ListFooterComponent}
       />}
 
       <FAB status={'Confirm'} onPress={() => { }} />
-      <BottomSheet
+
+      <TrackingPopup
+        isVisible={editModal}  
+        closeSheet={() => setEditModal(false)}
+        selectProduct={selectProduct}
+        onSavePress={()=>{console.log('saveddd!!!!!!!!!!!');
+        handleSave()
+        }}
+      />
+
+      <SuccessPopup isVisible={successPopup} onPress={()=>setSuccessPopup(false)}/>
+
+      {/* <BottomSheet
         isVisible={editModal}
         closeSheet={() => setEditModal(false)}
       >
@@ -185,8 +201,8 @@ const CheckOutScreen = ({ navigation }: any) => {
             />
           </View>
         </>
-        {/* <PMSDetailBottomSheetView /> */}
-      </BottomSheet>
+      </BottomSheet> */}
+      
     </View>
   );
 };

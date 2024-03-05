@@ -5,7 +5,7 @@ import { ListItemProps } from '../../interface/common';
 import { colors, fontSize, fonts, wp } from '../../helper';
 import { formatDate } from '../../helper/date';
 
-const ListItem = ({ item, onPress }: ListItemProps) => {
+const PMSListItem = ({ item, onPress }: ListItemProps) => {
   return (
       <TouchableOpacity
           onPress={onPress}
@@ -16,7 +16,7 @@ const ListItem = ({ item, onPress }: ListItemProps) => {
             <Text numberOfLines={1} style={styles.titleText}>
               {item?.description && item?.description?.length < 25
                   ? item?.description
-                  : item?.description?.slice(0, 25) + '...'}
+                  : item?.description?.slice(0, 15) + '...'}
             </Text>
             <View
                 style={[
@@ -37,6 +37,12 @@ const ListItem = ({ item, onPress }: ListItemProps) => {
                 {item?.pic}
               </Text>
             </View>
+            <Text style={styles.picText}>
+              {'PIC: '}
+            </Text>
+            <Text style={styles.erText}>
+              {'Er.2'}
+            </Text>
           </View>
           <Text style={styles.dateText}>{formatDate(item?.due as string)}</Text>
         </View>
@@ -47,7 +53,7 @@ const ListItem = ({ item, onPress }: ListItemProps) => {
   );
 };
 
-export default ListItem;
+export default PMSListItem;
 
 const styles = StyleSheet.create({
   container: {
@@ -72,9 +78,9 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular,
   },
   tagView: {
-    marginLeft: wp(2),
     paddingVertical: wp(1),
     borderRadius: wp(1.33),
+    marginHorizontal: wp(2),
     paddingHorizontal: wp(3),
   },
   tagText: {
@@ -85,6 +91,16 @@ const styles = StyleSheet.create({
     color: colors.darkGrey,
     fontSize: fontSize(13),
     fontFamily: fonts.medium,
+  },
+  picText: {
+    color: colors.darkGrey,
+    fontSize: fontSize(12),
+    fontFamily: fonts.regular,
+  },
+  erText: {
+    color: colors.black,
+    fontSize: fontSize(12),
+    fontFamily: fonts.regular,
   },
   descText: {
     marginTop: wp(2),

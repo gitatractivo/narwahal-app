@@ -72,6 +72,14 @@ const GetIconFromLibrary = (name: string) => {
       return Icons.ScanQR;
     case 'barcodeReader':
       return Icons.BarcodeReader;
+    case 'checkMarkBlue':
+      return Icons.CheckMarkBlue;
+    case 'wrenchHalf':
+      return Icons.WrenchHalf;
+    case 'location':
+      return Icons.Location;
+    case 'chevronRightLite':
+      return Icons.ChevronRightLite;
 
     default:
       return Icons.Target;

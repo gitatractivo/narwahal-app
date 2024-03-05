@@ -57,6 +57,14 @@ export interface FABProps {
   iconName?: string;
   onPress: () => void;
 }
+export interface FABProgressiveProps {
+  status?: string;
+  iconName?: string;
+  onPress: () => void;
+  disable?: boolean;
+  partial?: boolean;
+}
+
 export type SvgIconsProps = {
   uri?: boolean;
   width?: number;
