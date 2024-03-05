@@ -213,6 +213,7 @@ export const detailData = [
     workingReplace: 23,
     pkgQty: 23,
     checkoutQty: 23,
+    scannedQty: 23,
   },
   {
     id: 2,
@@ -223,6 +224,7 @@ export const detailData = [
     workingReplace: 23,
     pkgQty: 23,
     checkoutQty: 23,
+    scannedQty: 23,
   },
   {
     id: 3,
@@ -233,6 +235,7 @@ export const detailData = [
     workingReplace: 23,
     pkgQty: 23,
     checkoutQty: 23,
+    scannedQty: 23,
   },
   {
     id: 4,
@@ -243,6 +246,7 @@ export const detailData = [
     workingReplace: 23,
     pkgQty: 23,
     checkoutQty: 23,
+    scannedQty: 23,
   },
   {
     id: 5,
@@ -253,6 +257,7 @@ export const detailData = [
     workingReplace: 23,
     pkgQty: 23,
     checkoutQty: 23,
+    scannedQty: 23,
   },
 ];
 
@@ -928,5 +933,29 @@ export const subListItem = [
     rob: '44',
     scannedQty: '02',
     tag: 'New',
+  },
+];
+
+export const PMSsubListItem = [
+  {
+    id: 1,
+    ID: '43',
+    scannedQty: '22',
+    tag: 'Reconditioned',
+    isSelected: false,
+  },
+  {
+    id: 2,
+    ID: '29',
+    scannedQty: '19',
+    tag: 'New',
+    isSelected: false,
+  },
+  {
+    id: 3,
+    ID: '04',
+    scannedQty: '02',
+    tag: 'New',
+    isSelected: false,
   },
 ]

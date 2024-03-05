@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   ActivityIndicator,
   StatusBar,
+  TouchableOpacity,
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -17,10 +18,13 @@ import {
   SearchBox,
   BottomSheet,
   CommonButton,
-  DetailListItem,
+  PMSCompletedListItem,
+  TrackingPopup,
+  PMSDetailListItem,
+  FABprogressive
 } from '../../components';
 import SvgIcons from '../../helper/SvgIcons';
-import {commonStyles, BASE_URL, ListFooterComponent} from '../../helper';
+import {commonStyles, BASE_URL, ListFooterComponent, detailData} from '../../helper';
 import {DetailDataProps, PMSdetailScreenProps} from '../../interface/common';
 import {hp, wp, fonts, isIos, colors, fontSize} from '../../helper';
 import axios from 'axios';
@@ -80,12 +84,21 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
   };
 
   const renderDetail = ({item}: any) => {
-    return <DetailListItem item={item} onPress={() => {
-      setEditModal(true);
-      console.log(item);
-      setTagToTrack(item.rfid);
-      console.log('Set tag to track: ', item.rfid);
-    }} />;
+    if(status === 'completed') {
+      return <PMSCompletedListItem item={item} onPress={() => {
+        setEditModal(true);
+        // console.log(item);
+        setTagToTrack(item?.rfid);
+        // console.log('Set tag to track: ', item.rfid);
+      }} />;
+    } else {
+      return <PMSDetailListItem item={item} onSubListPress={() => {
+        setEditModal(true);
+        // console.log(item);
+        setTagToTrack(item?.rfid);
+        // console.log('Set tag to track: ', item.rfid);
+      }} />;
+    }
   };
 
   return (
@@ -100,6 +113,11 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
           {description}
         </Text>
       </View>
+
+      <TouchableOpacity activeOpacity={0.8} onPress={()=>{}} style={styles.triggerView}>
+        <SvgIcons iconName='barcodeReader'/>
+        <Text style={styles.triggerText}>{'Press the trigger to start scanning!'}</Text>
+      </TouchableOpacity>
 
       {isLoading ? (
         <View style={styles.loadingContainer}>
@@ -118,15 +136,33 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
         />
       )}
 
-      <FAB status={status as string} onPress={() => {
-        handleStatusChange()
-      }} />
-      <BottomSheet
+      {status !== 'completed' && 
+        (status === 'planning') ? 
+        <FABprogressive 
+          status={'Start'} 
+          onPress={() => {
+          handleStatusChange()
+          }}
+          disable={false}
+          partial={false}
+        />
+        : <FAB status={'Complete'} onPress={() => {
+          handleStatusChange()
+        }} />
+      }
+
+      <TrackingPopup 
+        pms
+        isVisible={editModal}
+        closeSheet={() => setEditModal(false)}
+      />
+
+      {/* <BottomSheet
         isVisible={editModal}
         closeSheet={() => setEditModal(false)}
       >
         <PMSDetailBottomSheetView setEditModal={setEditModal} tagToTrack={tagToTrack} />
-      </BottomSheet>
+      </BottomSheet> */}
 
       <SafeAreaView />
     </View>
@@ -177,13 +213,21 @@ const styles = StyleSheet.create({
     borderTopRightRadius: wp(4),
     backgroundColor: colors.white,
   },
-  greenDot: {
-    top: wp(3),
-    width: wp(3),
-    right: wp(3),
-    height: wp(3),
-    position: 'absolute',
-    borderRadius: wp(100),
-    backgroundColor: colors.green,
+  triggerView: {
+    margin: wp(1), 
+    borderWidth: wp(0.2),
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: wp(1.6),
+    justifyContent: 'center',
+    paddingVertical: wp(1.5),
+    borderColor: colors.primary,
+    backgroundColor: colors.primaryMedium,
+  },
+  triggerText: {
+    marginLeft: wp(3),
+    color: colors.primary,
+    fontSize: fontSize(14),
+    fontFamily: fonts.medium,
   },
 });

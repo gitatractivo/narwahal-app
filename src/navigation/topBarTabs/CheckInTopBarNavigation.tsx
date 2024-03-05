@@ -16,8 +16,10 @@ import {
   CommonButton,
   FAB,
   FilterBar,
-  ListItem,
+  InventoryFilterModal,
   SearchBox,
+  SuccessPopup,
+  TrackingPopup,
 } from '../../components';
 import {
   BASE_URL,
@@ -35,9 +37,9 @@ import SvgIcons from '../../helper/SvgIcons';
 import {
   checkInDockList,
   checkInNewSpareList,
-  // checkInSpareList,
+  checkInSpareList,
 } from '../../helper/dataConstant';
-import CheckInSpareList from '../../components/common/CheckInSpareListItem';
+import CheckInSpareListItem from '../../components/common/CheckInSpareListItem';
 import CheckInDockListItem from '../../components/common/CheckInDockListItem';
 import {useEffect, useState} from 'react';
 import {NativeModules} from 'react-native';
@@ -58,48 +60,49 @@ export function Spares({navigation}: any) {
   const [selectProduct, setSelectProduct] = useState<RfidProductProp | null>();
   const [quantity, setQuantity] = useState<number>(0);
   const [status, setStatus] = useState<string>('planning');
+  const [filterModal, setFilterModal] = useState<boolean>(false);
 
-  useEffect(() => {
+  // useEffect(() => {
+  // //   TagReadModule.startInventoryTask();
+  // //   const sub = DeviceEventEmitter.addListener('ReadTag', event => {
+  // //     let tag = event.match(/[0-9A-F]{24}/i)[0];
+
+  // //     // console.log('Read Tag: ', tag);
+  // //     const arr = tags;
+  // //     if (!arr.includes(tag)) {
+  // //       arr.push(tag);
+  // //       setTags(prev => [...prev, tag]);
+  // //     }
+  // //   });
+
   //   TagReadModule.startInventoryTask();
-  //   const sub = DeviceEventEmitter.addListener('ReadTag', event => {
+  //   console.log('startInventoryTask')
+  //   const sub = DeviceEventEmitter.addListener('ReadTag', (event) => {
   //     let tag = event.match(/[0-9A-F]{24}/i)[0];
 
   //     // console.log('Read Tag: ', tag);
-  //     const arr = tags;
+  //     const arr = tags
   //     if (!arr.includes(tag)) {
-  //       arr.push(tag);
-  //       setTags(prev => [...prev, tag]);
+  //       arr.push(tag)
+  //       setTags(prev => [...prev,tag]);
   //     }
   //   });
 
-    TagReadModule.startInventoryTask();
-    console.log('startInventoryTask')
-    const sub = DeviceEventEmitter.addListener('ReadTag', (event) => {
-      let tag = event.match(/[0-9A-F]{24}/i)[0];
+  //   return () => {
+  //     console.log("cleanup");
+  //     TagReadModule.stopInventoryTask();
+  //     sub.remove();
+  //   };
+  // }, []);
 
-      // console.log('Read Tag: ', tag);
-      const arr = tags
-      if (!arr.includes(tag)) {
-        arr.push(tag)
-        setTags(prev => [...prev,tag]);
-      }
-    });
-
-    return () => {
-      console.log("cleanup");
-      TagReadModule.stopInventoryTask();
-      sub.remove();
-    };
-  }, []);
-
-  useEffect(() => {
-    console.log('tadgs', tags);
-    if (tags.length > 0) {
-      // removeDuplicates();
-      setIsLoading(true);
-      // getTags();
-    }
-  }, [tags])
+  // useEffect(() => {
+  //   console.log('tadgs', tags);
+  //   if (tags.length > 0) {
+  //     // removeDuplicates();
+  //     setIsLoading(true);
+  //     // getTags();
+  //   }
+  // }, [tags])
 
   const handleSave = async () => {
     try {
@@ -107,7 +110,7 @@ export function Spares({navigation}: any) {
         `${BASE_URL}/pms/scan_products?scan_type=checkin`,
         [
           {
-            product_id: selectProduct?.product.id,
+            product_id: selectProduct?.product?.id,
             quantity: quantity,
           },
         ],
@@ -162,7 +165,7 @@ export function Spares({navigation}: any) {
   };
 
   const renderCheckInSpareList = ({item}: any) => {
-    return <CheckInSpareList item={item} onPress={() => handleSelect(item)} />;
+    return <CheckInSpareListItem item={item} onPress={() => handleSelect(item)} />;
   };
 
   const onStatusUpdatePress = (updatedStatus:string) => {
@@ -171,9 +174,17 @@ export function Spares({navigation}: any) {
 
   return (
     <View style={commonStyles.root}>
-      <FilterBar 
+      {/* <FilterBar 
           onStatusUpdate={onStatusUpdatePress} 
-        />
+        /> */}
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => setFilterModal(true)}
+          style={styles.statusBarView}
+        >
+          <Text style={styles.stausText}>{`Inventory type`}</Text>
+          <SvgIcons iconName="chevronRight" />
+        </TouchableOpacity>
 
       {isLoading ? (
         <View style={styles.loadingContainer}>
@@ -183,14 +194,30 @@ export function Spares({navigation}: any) {
       ) : (
         <FlatList
           bounces={false}
-          data={products}
+          // data={products}
+          data={checkInSpareList}
           renderItem={renderCheckInSpareList}
           keyExtractor={(item, index) => index.toString()}
           ListFooterComponent={ListFooterComponent}
         />
       )}
 
-      <BottomSheet isVisible={editModal} closeSheet={() => setEditModal(false)}>
+      <TrackingPopup
+        checkIn
+        isVisible={editModal}  
+        closeSheet={() => setEditModal(false)}
+        selectProduct={selectProduct}
+        onSavePress={()=>{handleSave()}}
+      />
+
+      <InventoryFilterModal
+        isVisible={filterModal}
+        closeFilter={() => setFilterModal(false)}
+        onApplyFilterPress={() => setFilterModal(false)}
+        onResetPress={() => setFilterModal(false)}
+      />
+
+      {/* <BottomSheet isVisible={editModal} closeSheet={() => setEditModal(false)}>
         <>
           <View style={styles.modalMainBox}></View>
           <View style={styles.modalSubTitleView}>
@@ -226,14 +253,15 @@ export function Spares({navigation}: any) {
             <CommonButton title={'Save'} onPress={handleSave} />
           </View>
         </>
-        {/* <PMSDetailBottomSheetView /> */}
-      </BottomSheet>
+      </BottomSheet> */}
+
     </View>
   );
 }
 
 export function NewSpares({navigation}: any) {
   const [status, setStatus] = useState<string>('planning');
+  const [filterModal, setFilterModal] = useState<boolean>(false);
   const renderCheckInNewSpareList = ({item}: any) => {
     return <CheckInNewSpareListItem item={item} onPress={() => navigation.navigate('CheckInDetailScreen')} />;
   };
@@ -244,9 +272,19 @@ export function NewSpares({navigation}: any) {
 
   return (
     <View style={commonStyles.root}>
-      <FilterBar 
+      {/* <FilterBar 
           onStatusUpdate={onStatusUpdatePress} 
-        />
+        /> */}
+
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => setFilterModal(true)}
+          style={styles.statusBarView}
+        >
+          <Text style={styles.stausText}>{`Inventory type`}</Text>
+          <SvgIcons iconName="chevronRight" />
+        </TouchableOpacity>
+
 
       <FlatList
         bounces={false}
@@ -254,6 +292,12 @@ export function NewSpares({navigation}: any) {
         renderItem={renderCheckInNewSpareList}
         keyExtractor={item => item?.id?.toString()}
         ListFooterComponent={ListFooterComponent}
+      />
+      <InventoryFilterModal
+        isVisible={filterModal}
+        closeFilter={() => setFilterModal(false)}
+        onApplyFilterPress={() => setFilterModal(false)}
+        onResetPress={() => setFilterModal(false)}
       />
     </View>
   );
@@ -307,17 +351,10 @@ const styles = StyleSheet.create({
   },
   stausText: {
     marginRight: wp(2),
-    color: colors.darkGrey,
+    color: colors.black,
     fontSize: fontSize(11),
     fontFamily: fonts.medium,
   },
-  completedText: {
-    marginRight: wp(2),
-    color: colors.green,
-    fontSize: fontSize(11),
-    fontFamily: fonts.medium,
-  },
-
   loadingContainer: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,

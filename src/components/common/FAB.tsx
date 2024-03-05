@@ -9,9 +9,9 @@ const FAB = ({onPress, status, iconName}: FABProps) => {
   return (
     <TouchableOpacity
       activeOpacity={0.9}
-      style={[styles.roundButton, styles.shadowStyle]}
+      style={styles.fabBtnStyle}
       onPress={onPress}>
-      <SvgIcons iconName={iconName || "checkMark"} />
+      <SvgIcons iconName={iconName || "checkMark"} iconColor={colors.white} />
       {status && <Text style={styles.titleText}>{status}</Text>}
     </TouchableOpacity>
   );
@@ -19,26 +19,18 @@ const FAB = ({onPress, status, iconName}: FABProps) => {
 export default FAB;
 
 const styles = StyleSheet.create({
-  roundButton: {
+  fabBtnStyle: {
     zIndex: 1,
     right: wp(5),
+    height: hp(6),
     bottom: hp(2),
     position: 'absolute',
     alignItems: 'center',
     flexDirection: 'row',
     borderRadius: wp(100),
-    paddingVertical: wp(3),
     justifyContent: 'center',
-    paddingHorizontal: wp(5.5),
+    paddingHorizontal: wp(4),
     backgroundColor: colors.primary,
-  },
-  titleText: {
-    marginLeft: wp(2),
-    color: colors.white,
-    fontSize: fontSize(18),
-    fontFamily: fonts.medium,
-  },
-  shadowStyle: {
     shadowOffset: {
       width: 3,
       height: 3,
@@ -47,5 +39,11 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     shadowOpacity: 0.2,
     shadowColor: colors.black,
+  },
+  titleText: {
+    marginLeft: wp(1.5),
+    color: colors.white,
+    fontSize: fontSize(18),
+    fontFamily: fonts.medium,
   },
 });

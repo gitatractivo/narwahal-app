@@ -4,36 +4,42 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { DetailListItemProps } from '../../interface/common';
 import { colors, fontSize, fonts, hp, wp } from '../../helper';
 
-const DetailListItem = ({ item, onPress }: DetailListItemProps) => {
+const PMSCompletedListItem = ({ item, onPress }: DetailListItemProps) => {
   return (
       <TouchableOpacity
           activeOpacity={0.7}
           onPress={onPress}
           style={styles.container}>
-        <Text style={styles.titleText}>{item?.product?.material_desc}</Text>
+        <Text style={styles.titleText}>{item?.title}</Text>
         <View style={styles.tagContainer}>
           <View style={styles.tagView}>
-            <Text style={styles.tagText}>{item?.product?.maker_desc}</Text>
+            <Text style={styles.tagText}>{item?.tag}</Text>
           </View>
-          <Text style={styles.uniqText}>{item?.product?.id}</Text>
+          <Text style={styles.idText}>{item?.uniqueID}</Text>
+          <Text style={styles.picText}>
+              {'PIC: '}
+            </Text>
+            <Text style={styles.erText}>
+              {'Er.2'}
+            </Text>
         </View>
 
         <View style={styles.qtyContainer}>
           <View>
             <Text style={styles.uniqText}>ROB:</Text>
-            {/* <Text style={styles.uniqText}>{Pkg. Qty:}</Text> */}
+            <Text style={styles.uniqText}>Pkg. Qty:</Text>
           </View>
           <View>
             <Text style={styles.qtyText}>{item?.rob}</Text>
-            {/* <Text style={styles.qtyText}>{item?.pkgQty}</Text> */}
+            <Text style={styles.qtyText}>{item?.pkgQty}</Text>
           </View>
           <View style={styles.qtySubView}>
-            {/* <Text style={styles.uniqText}>{Working & Replace:}</Text>
-          <Text style={styles.uniqText}>{Checkout Qty:}</Text> */}
+            <Text style={styles.uniqText}>Working & Replace:</Text>
+            <Text style={styles.uniqText}>Checkout Qty:</Text>
           </View>
           <View>
-            {/* <Text style={styles.qtyText}>{item?.workingReplace}</Text>
-          <Text style={styles.qtyText}>{item?.checkoutQty}</Text> */}
+            <Text style={styles.qtyText}>{item?.workingReplace}</Text>
+          <Text style={styles.qtyText}>{item?.checkoutQty}</Text>
           </View>
         </View>
         <View style={styles.greenDot} />
@@ -41,7 +47,7 @@ const DetailListItem = ({ item, onPress }: DetailListItemProps) => {
   );
 };
 
-export default DetailListItem;
+export default PMSCompletedListItem;
 
 const styles = StyleSheet.create({
   container: {
@@ -61,7 +67,6 @@ const styles = StyleSheet.create({
   },
   tagView: {
     borderWidth: wp(0.2),
-    marginRight: wp(4.5),
     paddingVertical: wp(1),
     borderRadius: wp(1.33),
     paddingHorizontal: wp(3),
@@ -88,6 +93,12 @@ const styles = StyleSheet.create({
     fontSize: fontSize(13),
     fontFamily: fonts.regular,
   },
+  idText: {
+    marginHorizontal: wp(4),
+    color: colors.darkGrey,
+    fontSize: fontSize(13),
+    fontFamily: fonts.regular,
+  },
   qtyText: {
     marginTop: hp(1),
     color: colors.black,
@@ -108,5 +119,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderRadius: wp(100),
     backgroundColor: colors.green,
+  },
+  picText: {
+    color: colors.darkGrey,
+    fontSize: fontSize(12),
+    fontFamily: fonts.regular,
+  },
+  erText: {
+    color: colors.black,
+    fontSize: fontSize(12),
+    fontFamily: fonts.regular,
   },
 });

@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 
 import SvgIcons from '../../helper/SvgIcons';
 import {
@@ -12,7 +12,7 @@ import {
   FAB,
   InventoryAddListItem,
   InventoryDetailListItem,
-  InventoryTrackingPopup,
+  TrackingPopup,
 } from '../../components';
 import {ListFooterComponent, colors, commonStyles, fontSize, fonts,  wp} from '../../helper';
 
@@ -72,10 +72,10 @@ const InventoryDetailScreen = ({route}: any) => {
           </View>
 
           {isScanning && 
-            <View style={styles.triggerView}>
+            <TouchableOpacity activeOpacity={0.8} onPress={()=>{}} style={styles.triggerView}>
               <SvgIcons iconName='barcodeReader'/>
               <Text style={styles.triggerText}>{'Press the trigger to start scanning!'}</Text>
-            </View>}
+            </TouchableOpacity>}
 
           {isAddListVisible ? (
             <FlatList
@@ -122,7 +122,8 @@ const InventoryDetailScreen = ({route}: any) => {
         onAddPartPress={() => {setIsAddPartsModal(false); setIsAddListVisible(false); setPartNo('') }}
       />
 
-      <InventoryTrackingPopup
+      <TrackingPopup 
+        locationNotVisible
         isVisible={isTrackingPopup}
         closeSheet={() => setIsTrackingPopup(false)}
         onSavePress={() => {}}

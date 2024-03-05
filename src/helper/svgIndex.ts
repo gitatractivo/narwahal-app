@@ -23,3 +23,7 @@ export { default as ScanComplete } from '../../assets/svg/scanComplete';
 export { default as Plus } from '../../assets/svg/plus';
 export { default as ScanQR } from '../../assets/svg/scanQR';
 export { default as BarcodeReader } from '../../assets/svg/barcodeReader';
+export { default as CheckMarkBlue } from '../../assets/svg/checkMarkBlue';
+export { default as WrenchHalf } from '../../assets/svg/wrenchHalf';
+export { default as Location } from '../../assets/svg/location';
+export { default as ChevronRightLite } from '../../assets/svg/chevronRightLite';
