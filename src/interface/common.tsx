@@ -127,6 +127,7 @@ export type DetailDataProps = {
     part_no: string;
   };
   rob: number;
+  rfid: string;
 };
 export type RfidProductProp = {
   product: {

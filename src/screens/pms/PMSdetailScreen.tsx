@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect, useMemo, useState} from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   ActivityIndicator,
   StatusBar,
-  TouchableOpacity,
+  TouchableOpacity, DeviceEventEmitter,
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -30,6 +30,11 @@ import {hp, wp, fonts, isIos, colors, fontSize} from '../../helper';
 import axios from 'axios';
 import PMSDetailBottomSheetView from '../../components/common/PMSDetailBottomSheetView.tsx';
 
+import {NativeModules} from 'react-native';
+
+const { TagReadModule } = NativeModules;
+
+
 const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
   const id = route?.params?.id;
   const description = route?.params?.description;
@@ -40,12 +45,40 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [detailData, setdetailData] = useState<DetailDataProps[]>();
-  const [tagToTrack, setTagToTrack] = useState('');
+  const [triggerPressed, setTriggerPressed] = useState(false);
+
+  const [currentTags, setCurrentTags] = useState<string[]>([]);
+  const productScanned = useMemo(() => {
+    let scanned = 0;
+    detailData?.forEach((item) => {
+      if (currentTags.includes(item?.rfid)) {
+        scanned++;
+      }
+    });
+    return scanned;
+  }, [currentTags, detailData]);
+
+  const PMSList = React.memo(() => {
+
+    console.log('Rerendering Started 2');
+
+    return <FlatList
+        bounces={false}
+        data={detailData}
+        renderItem={renderDetail}
+        keyExtractor={(_item, index) => index.toString()}
+        ListFooterComponent={ListFooterComponent}
+        refreshing={refreshing}
+        onRefresh={handleRefresh}
+    />;
+    //@ts-ignore
+  }, (prevProps, nextProps) => { return prevProps?.detailData == nextProps?.detailData });
 
   const getData = async () => {
     try {
       console.log(`${BASE_URL}/pms/products?job_id=${id}`);
       const resp = await axios.get(`${BASE_URL}/pms/products?job_id=${id}`);
+      console.log("gettingData")
       console.log(resp);
       setdetailData(resp.data);
     } catch (error) {
@@ -58,7 +91,37 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
 
   useEffect(() => {
     getData();
-  }, [id]);
+  }, []);
+
+  useEffect(() => {
+    console.log('Adding listeners');
+    const listener1 = DeviceEventEmitter.addListener('TriggerPress', () => {
+      console.log('Trigger Pressed');
+      setTriggerPressed(true);
+    });
+    const listener2 = DeviceEventEmitter.addListener('TriggerRelease', () => {
+      console.log('Trigger Released');
+      setTriggerPressed(false);
+    });
+    const listener3 = DeviceEventEmitter.addListener('ReadTag', (event) => {
+      const tagId = event.split(';')[0];
+      if (!currentTags.includes(tagId)) {
+        setCurrentTags([...currentTags, tagId]);
+      }
+    });
+    return () => {
+      listener1.remove();
+      listener2.remove();
+      listener3.remove();
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   TagReadModule.startInventoryTask();
+  //   return () => {
+  //     TagReadModule.stopInventoryTask();
+  //   };
+  // }, []);
 
   const handleStatusChange = async () => {
     try {
@@ -88,14 +151,14 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
       return <PMSCompletedListItem item={item} onPress={() => {
         setEditModal(true);
         // console.log(item);
-        setTagToTrack(item?.rfid);
+        // setTagToTrack(item?.rfid);
         // console.log('Set tag to track: ', item.rfid);
       }} />;
     } else {
       return <PMSDetailListItem item={item} onSubListPress={() => {
         setEditModal(true);
         // console.log(item);
-        setTagToTrack(item?.rfid);
+        // setTagToTrack(item?.rfid);
         // console.log('Set tag to track: ', item.rfid);
       }} />;
     }
@@ -103,6 +166,7 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
 
   return (
     <View style={commonStyles.root}>
+      {console.log('Rerendering Started 1')}
       <SafeAreaView />
       <SearchBox
         value={searchText}
@@ -116,7 +180,7 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
 
       <TouchableOpacity activeOpacity={0.8} onPress={()=>{}} style={styles.triggerView}>
         <SvgIcons iconName='barcodeReader'/>
-        <Text style={styles.triggerText}>{'Press the trigger to start scanning!'}</Text>
+        <Text style={styles.triggerText}>{triggerPressed ? 'Scanning...' : 'Press the trigger to start scanning!'}</Text>
       </TouchableOpacity>
 
       {isLoading ? (
@@ -125,15 +189,7 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
           <Text>Loading...</Text>
         </View>
       ) : (
-        <FlatList
-          bounces={false}
-          data={detailData}
-          renderItem={renderDetail}
-          keyExtractor={(item, index) => index.toString()}
-          ListFooterComponent={ListFooterComponent}
-          refreshing={refreshing}
-          onRefresh={handleRefresh}
-        />
+          <PMSList />
       )}
 
       {status !== 'completed' && 
@@ -165,6 +221,7 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
       </BottomSheet> */}
 
       <SafeAreaView />
+      {console.log('Rerendering Ended 1')}
     </View>
   );
 };
