@@ -71,7 +71,8 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
         refreshing={refreshing}
         onRefresh={handleRefresh}
     />;
-  }, (prevProps, nextProps) => { return prevProps.detailData == nextProps.detailData });
+    //@ts-ignore
+  }, (prevProps, nextProps) => { return prevProps?.detailData == nextProps?.detailData });
 
   const getData = async () => {
     try {
@@ -115,12 +116,12 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
     };
   }, []);
 
-  useEffect(() => {
-    TagReadModule.startInventoryTask();
-    return () => {
-      TagReadModule.stopInventoryTask();
-    };
-  }, []);
+  // useEffect(() => {
+  //   TagReadModule.startInventoryTask();
+  //   return () => {
+  //     TagReadModule.stopInventoryTask();
+  //   };
+  // }, []);
 
   const handleStatusChange = async () => {
     try {
@@ -150,12 +151,14 @@ const PMSdetailScreen: FC<PMSdetailScreenProps> = ({route}) => {
       return <PMSCompletedListItem item={item} onPress={() => {
         setEditModal(true);
         // console.log(item);
+        // setTagToTrack(item?.rfid);
         // console.log('Set tag to track: ', item.rfid);
       }} />;
     } else {
       return <PMSDetailListItem item={item} onSubListPress={() => {
         setEditModal(true);
         // console.log(item);
+        // setTagToTrack(item?.rfid);
         // console.log('Set tag to track: ', item.rfid);
       }} />;
     }
